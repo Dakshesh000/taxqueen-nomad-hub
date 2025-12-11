@@ -1,5 +1,6 @@
 // Brand Assets
 export { default as logoTaxQueen } from './brand/logo-tax-queen.png';
+export { default as logoTaxQueenMain } from './brand/logo-tax-queen-main.jpg';
 
 // Heather Personal Photos
 export { default as heatherPortrait } from './heather/portrait-square.png';
