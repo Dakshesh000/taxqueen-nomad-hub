@@ -9,39 +9,18 @@ const AboutSection = () => {
   const [isHovering, setIsHovering] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Credentials with positioning - fills the entire container
-  const credentials = [
-    // Top row
-    { text: 'Enrolled Agent', top: '5%', left: '3%', size: 'text-3xl' },
-    { text: 'IRS Certified', top: '8%', left: '25%', size: 'text-4xl' },
-    { text: 'Tax Expert', top: '3%', left: '55%', size: 'text-3xl' },
-    { text: 'Digital Nomad', top: '10%', left: '78%', size: 'text-4xl' },
-    // Upper middle
-    { text: '200+ Nomads Served', top: '18%', left: '5%', size: 'text-4xl' },
-    { text: 'Tax Consultant', top: '22%', left: '40%', size: 'text-3xl' },
-    { text: 'Expat Specialist', top: '15%', left: '70%', size: 'text-3xl' },
-    // Middle rows (around portrait)
-    { text: 'IRS Certified', top: '30%', left: '2%', size: 'text-3xl' },
-    { text: 'Enrolled Agent', top: '35%', left: '18%', size: 'text-4xl' },
-    { text: '50 States', top: '32%', left: '72%', size: 'text-4xl' },
-    { text: 'Tax Expert', top: '38%', left: '85%', size: 'text-3xl' },
-    { text: 'Digital Nomad', top: '45%', left: '3%', size: 'text-4xl' },
-    { text: 'Since 2018', top: '48%', left: '80%', size: 'text-3xl' },
-    { text: '200+ Clients', top: '52%', left: '5%', size: 'text-3xl' },
-    { text: 'Tax Specialist', top: '55%', left: '78%', size: 'text-4xl' },
-    // Lower middle
-    { text: 'Nomad Expert', top: '62%', left: '2%', size: 'text-4xl' },
-    { text: 'IRS Certified', top: '65%', left: '75%', size: 'text-3xl' },
-    { text: 'Enrolled Agent', top: '68%', left: '15%', size: 'text-3xl' },
-    { text: 'Tax Pro', top: '70%', left: '82%', size: 'text-4xl' },
-    // Bottom rows
-    { text: 'Digital Nomad', top: '78%', left: '5%', size: 'text-3xl' },
-    { text: '200+ Served', top: '82%', left: '30%', size: 'text-4xl' },
-    { text: 'Tax Expert', top: '75%', left: '60%', size: 'text-3xl' },
-    { text: 'Enrolled Agent', top: '80%', left: '80%', size: 'text-4xl' },
-    { text: 'IRS Certified', top: '88%', left: '8%', size: 'text-4xl' },
-    { text: 'Expat Tax', top: '90%', left: '45%', size: 'text-3xl' },
-    { text: '50 States Covered', top: '85%', left: '70%', size: 'text-3xl' },
+  // Credentials organized as linear rows
+  const rows = [
+    { texts: ['Enrolled Agent', 'IRS Certified', 'Tax Expert', 'Digital Nomad', 'Expat Specialist'], size: 'text-4xl' },
+    { texts: ['200+ Nomads Served', 'Tax Consultant', '50 States Covered', 'Since 2018', 'Tax Pro'], size: 'text-3xl' },
+    { texts: ['IRS Certified', 'Enrolled Agent', 'Digital Nomad', 'Tax Expert', '200+ Clients'], size: 'text-4xl' },
+    { texts: ['Expat Tax', 'Nomad Expert', 'IRS Certified', 'Tax Consultant', 'Enrolled Agent'], size: 'text-3xl' },
+    { texts: ['Tax Expert', 'Digital Nomad', '50 States', 'Enrolled Agent', 'IRS Certified'], size: 'text-4xl' },
+    { texts: ['200+ Nomads', 'Tax Specialist', 'Expat Expert', 'Since 2018', 'Tax Pro'], size: 'text-3xl' },
+    { texts: ['Enrolled Agent', 'IRS Certified', 'Tax Expert', 'Digital Nomad', 'Expat Specialist'], size: 'text-4xl' },
+    { texts: ['Tax Consultant', '200+ Served', 'Nomad Tax', '50 States Covered', 'IRS Certified'], size: 'text-3xl' },
+    { texts: ['Digital Nomad', 'Enrolled Agent', 'Tax Expert', 'IRS Certified', '200+ Clients'], size: 'text-4xl' },
+    { texts: ['Expat Tax', 'Tax Pro', 'Nomad Expert', 'Enrolled Agent', 'Since 2018'], size: 'text-3xl' },
   ];
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -54,26 +33,24 @@ const AboutSection = () => {
     }
   };
 
-  const getOpacity = (topPercent: string, leftPercent: string) => {
-    if (!isHovering || !sectionRef.current) return 0.05; // Almost invisible
+  const getOpacityFromPosition = (rowIndex: number, textIndex: number, totalTexts: number) => {
+    if (!isHovering || !sectionRef.current) return 0.05;
 
     const rect = sectionRef.current.getBoundingClientRect();
-    const elementX = (parseFloat(topPercent) / 100) * rect.width;
-    const elementY = (parseFloat(leftPercent) / 100) * rect.height;
     
-    // Swap X and Y since top% affects Y position and left% affects X position
-    const actualX = (parseFloat(leftPercent) / 100) * rect.width;
-    const actualY = (parseFloat(topPercent) / 100) * rect.height;
+    // Calculate approximate element position based on row and text index
+    const rowHeight = rect.height / rows.length;
+    const elementY = rowIndex * rowHeight + rowHeight / 2;
+    const elementX = ((textIndex + 0.5) / totalTexts) * rect.width;
 
     const distance = Math.sqrt(
-      Math.pow(mousePosition.x - actualX, 2) +
-      Math.pow(mousePosition.y - actualY, 2)
+      Math.pow(mousePosition.x - elementX, 2) +
+      Math.pow(mousePosition.y - elementY, 2)
     );
 
-    const maxDistance = 180; // Spotlight radius in pixels
+    const maxDistance = 180;
     if (distance > maxDistance) return 0.05;
 
-    // Closer = higher opacity (max 0.45 for medium gray, not black)
     return 0.05 + (1 - distance / maxDistance) * 0.4;
   };
 
@@ -87,22 +64,26 @@ const AboutSection = () => {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
-        {/* Scattered Credential Text - Spotlight Reveal */}
-        {credentials.map((cred, index) => (
-          <span
-            key={index}
-            className={`absolute ${cred.size} font-semibold pointer-events-none select-none transition-opacity duration-150`}
-            style={{
-              top: cred.top,
-              left: cred.left,
-              color: `rgba(156, 163, 175, ${getOpacity(cred.top, cred.left)})`, // gray-400 base
-            }}
-          >
-            {cred.text}
-          </span>
-        ))}
+        {/* Credential Text Rows - Spotlight Reveal */}
+        <div className="absolute inset-0 flex flex-col justify-between py-4 pointer-events-none select-none">
+          {rows.map((row, rowIndex) => (
+            <div key={rowIndex} className="flex justify-around w-full">
+              {row.texts.map((text, textIndex) => (
+                <span
+                  key={textIndex}
+                  className={`${row.size} font-semibold whitespace-nowrap transition-opacity duration-150`}
+                  style={{
+                    color: `rgba(156, 163, 175, ${getOpacityFromPosition(rowIndex, textIndex, row.texts.length)})`,
+                  }}
+                >
+                  {text}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
 
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col items-center text-center space-y-6 relative z-10">
             {/* Heading */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
