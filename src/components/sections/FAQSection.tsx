@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 import {
   Accordion,
   AccordionContent,
@@ -5,59 +7,120 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Placeholder FAQs - to be replaced with actual content
-const faqs = [
+// Placeholder Q&A - to be replaced with actual content
+const questions = [
   {
-    question: "[FAQ Question 1]",
-    answer: "[Answer to FAQ 1]",
+    question: "Who do you help with taxes?",
+    answer: "We specialize in helping US citizens and residents who live abroad, digital nomads, remote workers, and expats navigate their US tax obligations. Whether you're working from Bali or traveling through Europe, we understand the unique challenges of your lifestyle.",
   },
   {
-    question: "[FAQ Question 2]",
-    answer: "[Answer to FAQ 2]",
+    question: "How does your process work?",
+    answer: "Our process is simple: First, we have a discovery call to understand your situation. Then, we gather your documents securely online. Next, we prepare and review your returns with you. Finally, we file and provide year-round support for any questions.",
   },
   {
-    question: "[FAQ Question 3]",
-    answer: "[Answer to FAQ 3]",
+    question: "What if I haven't filed in years?",
+    answer: "Don't worry – you're not alone, and we can help. We specialize in helping nomads get caught up with back taxes through streamlined filing procedures. We'll assess your situation and create a plan to get you compliant without unnecessary stress.",
   },
   {
-    question: "[FAQ Question 4]",
-    answer: "[Answer to FAQ 4]",
+    question: "Do I really need to file US taxes abroad?",
+    answer: "Yes, US citizens and green card holders are required to file US taxes regardless of where they live or earn income. However, there are exclusions and credits available that can significantly reduce or eliminate your US tax liability.",
+  },
+  {
+    question: "How much do your services cost?",
+    answer: "Our pricing depends on the complexity of your tax situation. We offer transparent, flat-fee pricing so you know exactly what to expect. Book a free consultation and we'll provide a custom quote based on your specific needs.",
   },
 ];
 
 const FAQSection = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   return (
-    <section id="faq" className="py-20 bg-muted/30">
+    <section id="faq" className="py-20">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <p className="text-sm font-medium text-primary uppercase tracking-wider mb-4">
-            FAQ
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            [FAQ Headline]
-          </h2>
-          <p className="text-muted-foreground">
-            [Common questions about digital nomad taxes]
-          </p>
+        {/* Desktop: Split Screen Layout */}
+        <div className="hidden md:grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-lg">
+          {/* Left Side - Questions (White) */}
+          <div className="bg-background p-8 lg:p-12">
+            <p className="text-sm font-medium text-primary uppercase tracking-wider mb-2">
+              FAQ
+            </p>
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-8">
+              Questions Answered
+            </h2>
+            
+            <div className="space-y-3">
+              {questions.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedIndex(index)}
+                  className={cn(
+                    "w-full text-left p-4 rounded-lg transition-all duration-300",
+                    selectedIndex === index
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted/50 text-foreground hover:bg-muted"
+                  )}
+                >
+                  <span className="font-medium">{item.question}</span>
+                </button>
+              ))}
+            </div>
+
+            <a
+              href="#full-faq"
+              className="inline-block mt-8 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Didn't find what you're looking for? Click here →
+            </a>
+          </div>
+
+          {/* Right Side - Answer (Primary Blue) */}
+          <div className="bg-primary p-8 lg:p-12 flex items-center">
+            <div
+              key={selectedIndex}
+              className="animate-fade-in"
+            >
+              <h3 className="text-xl font-semibold text-primary-foreground mb-4">
+                {questions[selectedIndex].question}
+              </h3>
+              <p className="text-primary-foreground/90 leading-relaxed text-lg">
+                {questions[selectedIndex].answer}
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
+        {/* Mobile: Accordion Layout */}
+        <div className="md:hidden">
+          <p className="text-sm font-medium text-primary uppercase tracking-wider mb-2">
+            FAQ
+          </p>
+          <h2 className="text-3xl font-bold text-foreground mb-8">
+            Questions Answered
+          </h2>
+
+          <Accordion type="single" defaultValue="item-0" collapsible className="space-y-3">
+            {questions.map((item, index) => (
+              <AccordionItem
+                key={index}
                 value={`item-${index}`}
-                className="bg-background rounded-lg px-6"
+                className="bg-muted/50 rounded-lg px-4 border-none"
               >
-                <AccordionTrigger className="text-left hover:no-underline">
-                  {faq.question}
+                <AccordionTrigger className="text-left hover:no-underline py-4">
+                  <span className="font-medium">{item.question}</span>
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  {faq.answer}
+                <AccordionContent className="text-muted-foreground pb-4">
+                  {item.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
+
+          <a
+            href="#full-faq"
+            className="inline-block mt-8 text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            Didn't find what you're looking for? Click here →
+          </a>
         </div>
       </div>
     </section>
