@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ const AboutSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number | null>(null);
 
   // Credentials organized as linear rows
   const rows = [
@@ -24,15 +25,21 @@ const AboutSection = () => {
     { texts: ['Expat Tax', 'Tax Pro', 'Nomad Expert', 'Enrolled Agent', 'Since 2018'], size: 'text-3xl' },
   ];
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (sectionRef.current) {
-      const rect = sectionRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
-    }
-  };
+  // Throttled mouse move handler for performance
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (rafRef.current) return;
+    
+    rafRef.current = requestAnimationFrame(() => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      }
+      rafRef.current = null;
+    });
+  }, []);
 
   const getOpacityFromPosition = (rowIndex: number, textIndex: number, totalTexts: number) => {
     if (!isHovering || !sectionRef.current) return 0.05;
@@ -99,11 +106,12 @@ const AboutSection = () => {
               onClick={() => setIsVideoOpen(true)}
             >
               {/* Portrait Circle */}
-              <div className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] lg:w-[350px] lg:h-[350px] rounded-full overflow-hidden shadow-lift-lg">
+              <div className="w-[280px] h-[280px] md:w-[320px] md:h-[320px] lg:w-[350px] lg:h-[350px] xl:w-[400px] xl:h-[400px] rounded-full overflow-hidden shadow-lift-lg">
                 <img 
                   src={heatherPortrait} 
                   alt="Heather - The Tax Queen"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
               </div>
 
