@@ -138,7 +138,7 @@ const TestimonialsSection = () => {
         </motion.div>
 
         {/* Scrolling Columns */}
-        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] max-h-[700px] overflow-hidden">
+        <div className="flex justify-center gap-6 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] max-h-[700px] xl:max-h-[800px] 2xl:max-h-[850px] overflow-hidden">
           <TestimonialsColumn items={column1Items} duration={25} />
           <TestimonialsColumn 
             items={column2Items} 
@@ -149,6 +149,12 @@ const TestimonialsSection = () => {
             items={column3Items} 
             className="hidden lg:block" 
             duration={22} 
+          />
+          {/* 4th column for ultra-wide screens */}
+          <TestimonialsColumn 
+            items={[...column1Items].reverse()} 
+            className="hidden 2xl:block" 
+            duration={28} 
           />
         </div>
       </div>

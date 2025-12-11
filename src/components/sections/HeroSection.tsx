@@ -40,20 +40,20 @@ const HeroSection = () => {
         className={`${isLocked ? 'relative' : 'sticky top-0'} z-20 pt-32 pb-12`}
       >
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="max-w-3xl xl:max-w-4xl mx-auto text-center space-y-6">
             {/* Optional Text / Badge */}
             <p className="text-sm font-medium text-foreground uppercase tracking-wider">
               For Nomads With US Tax Obligations
             </p>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight uppercase">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground leading-tight uppercase">
               TAXES FOR DIGITAL NOMADS.{" "}
               <span className="text-foreground">SIMPLIFIED.</span>
             </h1>
 
             {/* Tagline */}
-            <p className="text-lg sm:text-xl text-foreground max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl xl:text-2xl text-foreground max-w-2xl xl:max-w-3xl mx-auto">
               Your life is on the Road. Your Taxes shouldn't feel like a detour.
             </p>
 
@@ -79,12 +79,14 @@ const HeroSection = () => {
           maxWidth: `calc(100% - ${videoPadding * 2}px)`,
         }}
       >
-        <div className="relative w-full h-[70vh] sm:h-[80vh] rounded-2xl overflow-hidden shadow-lift-lg">
+        <div className="relative w-full h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh] rounded-2xl overflow-hidden shadow-lift-lg">
           {/* Hero Image */}
           <img
             src={vanSnowMountains}
             alt="Digital nomad lifestyle - van in snowy mountain landscape"
             className="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
           />
           
           {/* Subtle overlay for depth */}

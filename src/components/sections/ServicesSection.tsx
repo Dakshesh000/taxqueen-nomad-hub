@@ -73,7 +73,7 @@ const ServicesSection = () => {
     return (
       <div
         className={cn(
-          "w-[300px] md:w-[340px] bg-background rounded-2xl p-6 transition-all duration-500 ease-out flex-shrink-0",
+          "w-[300px] md:w-[340px] xl:w-[380px] 2xl:w-[400px] bg-background rounded-2xl p-6 xl:p-8 transition-all duration-500 ease-out flex-shrink-0",
           getCardStyle(position),
           isCenter ? "shadow-lift-lg border-2 border-primary" : "shadow-md"
         )}
@@ -122,7 +122,7 @@ const ServicesSection = () => {
           {/* Left Arrow */}
           <button
             onClick={handlePrev}
-            className="absolute left-0 md:left-8 lg:left-16 z-20 w-12 h-12 rounded-full bg-muted/80 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+            className="absolute left-0 md:left-8 lg:left-16 xl:left-24 2xl:left-32 z-20 w-12 h-12 rounded-full bg-muted/80 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
             aria-label="Previous service"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -147,7 +147,7 @@ const ServicesSection = () => {
           {/* Right Arrow */}
           <button
             onClick={handleNext}
-            className="absolute right-0 md:right-8 lg:right-16 z-20 w-12 h-12 rounded-full bg-muted/80 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
+            className="absolute right-0 md:right-8 lg:right-16 xl:right-24 2xl:right-32 z-20 w-12 h-12 rounded-full bg-muted/80 hover:bg-primary hover:text-primary-foreground flex items-center justify-center transition-colors"
             aria-label="Next service"
           >
             <ChevronRight className="w-6 h-6" />
