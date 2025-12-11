@@ -37,54 +37,63 @@ const FAQSection = () => {
   return (
     <section id="faq" className="py-20">
       {/* Desktop: Split Screen Layout */}
-      <div className="hidden md:grid md:grid-cols-2 min-h-[500px]">
-        {/* Left Side - Questions (White) */}
-        <div className="bg-background p-8 lg:p-12 flex flex-col justify-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-8 text-right">
-            You've got questions.
-          </h2>
-          
-          <div className="space-y-3">
-            {questions.map((item, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedIndex(index)}
-                className={cn(
-                  "w-full text-right p-4 rounded-lg transition-all duration-300",
-                  selectedIndex === index
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted/50 text-foreground hover:bg-muted"
-                )}
-              >
-                <span className="font-medium">{item.question}</span>
-              </button>
-            ))}
+      <div className="hidden md:block">
+        {/* Headings Row */}
+        <div className="grid grid-cols-2">
+          <div className="bg-background p-8 lg:p-12 pb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground text-right">
+              You've got questions.
+            </h2>
+          </div>
+          <div className="bg-primary p-8 lg:p-12 pb-6">
+            <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground">
+              I have the answers.
+            </h2>
+          </div>
+        </div>
+        
+        {/* Content Row */}
+        <div className="grid grid-cols-2">
+          {/* Left Side - Questions (White) */}
+          <div className="bg-background p-8 lg:p-12 pt-6">
+            <div className="space-y-3">
+              {questions.map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedIndex(index)}
+                  className={cn(
+                    "w-full text-right p-4 rounded-lg transition-all duration-300",
+                    selectedIndex === index
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted/50 text-foreground hover:bg-muted"
+                  )}
+                >
+                  <span className="font-medium">{item.question}</span>
+                </button>
+              ))}
+            </div>
+
+            <a
+              href="#full-faq"
+              className="inline-block mt-8 text-sm text-muted-foreground hover:text-primary transition-colors text-right w-full"
+            >
+              Didn't find what you're looking for? Click here →
+            </a>
           </div>
 
-          <a
-            href="#full-faq"
-            className="inline-block mt-8 text-sm text-muted-foreground hover:text-primary transition-colors text-right"
-          >
-            Didn't find what you're looking for? Click here →
-          </a>
-        </div>
-
-        {/* Right Side - Answer (Primary Blue) */}
-        <div className="bg-primary p-8 lg:p-12 flex flex-col justify-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-8">
-            I have the answers.
-          </h2>
-          
-          <div
-            key={selectedIndex}
-            className="animate-fade-in"
-          >
-            <h3 className="text-xl font-semibold text-primary-foreground mb-4">
-              {questions[selectedIndex].question}
-            </h3>
-            <p className="text-primary-foreground/90 leading-relaxed text-lg">
-              {questions[selectedIndex].answer}
-            </p>
+          {/* Right Side - Answer (Primary Blue) */}
+          <div className="bg-primary p-8 lg:p-12 pt-6">
+            <div
+              key={selectedIndex}
+              className="animate-fade-in"
+            >
+              <h3 className="text-xl font-semibold text-primary-foreground mb-4">
+                {questions[selectedIndex].question}
+              </h3>
+              <p className="text-primary-foreground/90 leading-relaxed text-lg">
+                {questions[selectedIndex].answer}
+              </p>
+            </div>
           </div>
         </div>
       </div>
