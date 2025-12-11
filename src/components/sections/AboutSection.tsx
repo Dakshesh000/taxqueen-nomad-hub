@@ -87,7 +87,9 @@ const AboutSection = () => {
           <div className="flex flex-col items-center text-center space-y-10 relative z-10">
             {/* Heading */}
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground uppercase">
-              Hi, I'm Heather, your <span className="text-primary">Tax Queen</span>
+              Hi, I'm Heather
+              <br />
+              Your <span className="text-primary">Tax Queen!</span>
             </h2>
 
             {/* Circular Portrait with Play Button - Both Float Together */}
@@ -123,15 +125,15 @@ const AboutSection = () => {
       {/* Video Modal */}
       <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
         <DialogContent className="max-w-4xl p-0 bg-black border-none overflow-hidden">
-          <video 
-            src="/videos/heather-intro.mp4"
-            controls
-            autoPlay
-            className="w-full h-auto"
-            poster={heatherPortrait}
-          >
-            Your browser does not support the video tag.
-          </video>
+          <div className="relative w-full aspect-video">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+              title="Meet Heather - Your Tax Queen"
+              className="absolute inset-0 w-full h-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </>
