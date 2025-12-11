@@ -1,5 +1,3 @@
-import { MoveRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { 
   workingAtBeach, 
   rvTopView3, 
@@ -34,13 +32,10 @@ const BlogSection = () => (
   <section className="w-full py-20 lg:py-28 bg-background">
     <div className="container mx-auto px-4 flex flex-col gap-14">
       {/* Header */}
-      <div className="flex w-full flex-col sm:flex-row sm:justify-between sm:items-center gap-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-foreground">
+      <div className="flex w-full justify-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-foreground text-center">
           Tax Tips & Resources
         </h2>
-        <Button variant="cta" className="gap-3">
-          View All Resources <MoveRight className="w-4 h-4" />
-        </Button>
       </div>
 
       {/* Blog Cards Grid */}
