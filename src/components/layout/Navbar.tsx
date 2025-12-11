@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { navigation } from "@/config/brand";
 import { Button } from "@/components/ui/button";
-import { logoTaxQueen } from "@/assets";
+import { logoTaxQueenMain } from "@/assets";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,12 +26,12 @@ const Navbar = () => {
         {/* Logo + Wordmark */}
         <a href="/" className="flex items-center gap-3">
           <img 
-            src={logoTaxQueen} 
+            src={logoTaxQueenMain} 
             alt="Tax Queen" 
             className={`w-auto transition-all duration-300 ${isScrolled ? "h-8" : "h-10"}`}
           />
-          <span className={`font-bold text-primary transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"}`}>
-            Tax Queen
+          <span className={`font-bold text-foreground uppercase tracking-wide transition-all duration-300 ${isScrolled ? "text-lg" : "text-xl"}`}>
+            TAX QUEEN
           </span>
         </a>
 

@@ -1,13 +1,9 @@
 import Navbar from "@/components/layout/Navbar";
-import { HeroSection } from "@/components/sections";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main>
-        <HeroSection />
-      </main>
     </div>
   );
 };
