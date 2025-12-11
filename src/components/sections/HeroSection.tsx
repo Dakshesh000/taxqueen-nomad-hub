@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { truckDesert } from "@/assets";
 import { ChevronDown } from "lucide-react";
+import vanSnowMountains from "@/assets/lifestyle/van-snow-mountains.jpg";
 
 const HeroSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -80,10 +80,10 @@ const HeroSection = () => {
         }}
       >
         <div className="relative w-full h-[60vh] sm:h-[70vh] rounded-2xl overflow-hidden shadow-lift-lg">
-          {/* Placeholder Image (will be video later) */}
+          {/* Hero Image */}
           <img
-            src={truckDesert}
-            alt="Digital nomad lifestyle - truck in desert landscape"
+            src={vanSnowMountains}
+            alt="Digital nomad lifestyle - van in snowy mountain landscape"
             className="absolute inset-0 w-full h-full object-cover"
           />
           
