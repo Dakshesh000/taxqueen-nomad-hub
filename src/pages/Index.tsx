@@ -1,5 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
-import { HeroSection, SocialProofSection } from "@/components/sections";
+import { HeroSection, SocialProofSection, FAQSection } from "@/components/sections";
 import AboutSection from "@/components/sections/AboutSection";
 
 const Index = () => {
@@ -10,6 +10,7 @@ const Index = () => {
         <HeroSection />
         <SocialProofSection />
         <AboutSection />
+        <FAQSection />
       </main>
     </div>
   );
