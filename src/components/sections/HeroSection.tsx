@@ -46,39 +46,14 @@ const HeroSection = () => {
               For Nomads With US Tax Obligations
             </p>
 
-            {/* Headline with white border for visibility over image */}
-            <h1 
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight uppercase"
-              style={{
-                textShadow: scrollProgress > 0.3 
-                  ? '-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white, 0 0 8px rgba(255,255,255,0.8)'
-                  : 'none',
-                transition: 'text-shadow 0.3s ease'
-              }}
-            >
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight uppercase">
               TAXES FOR DIGITAL NOMADS.{" "}
-              <span 
-                className="text-primary"
-                style={{
-                  textShadow: scrollProgress > 0.3 
-                    ? '-1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white, 0 0 8px rgba(255,255,255,0.8)'
-                    : 'none'
-                }}
-              >
-                SIMPLIFIED.
-              </span>
+              <span className="text-primary">SIMPLIFIED.</span>
             </h1>
 
             {/* Tagline */}
-            <p 
-              className="text-lg sm:text-xl text-foreground max-w-2xl mx-auto"
-              style={{
-                textShadow: scrollProgress > 0.3 
-                  ? '0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.7)'
-                  : 'none',
-                transition: 'text-shadow 0.3s ease'
-              }}
-            >
+            <p className="text-lg sm:text-xl text-foreground max-w-2xl mx-auto">
               Your life is on the Road. Your Taxes shouldn't feel like a detour.
             </p>
 
