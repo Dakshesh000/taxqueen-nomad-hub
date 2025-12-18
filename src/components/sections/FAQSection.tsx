@@ -62,10 +62,10 @@ const FAQSection = () => {
                   key={index}
                   onClick={() => setSelectedIndex(index)}
                   className={cn(
-                    "w-full text-right p-4 rounded-lg transition-all duration-300",
+                    "w-full text-right p-4 rounded-lg transition-all duration-300 border-2",
                     selectedIndex === index
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted/50 text-foreground hover:bg-muted"
+                      ? "border-primary bg-background text-foreground"
+                      : "border-transparent bg-muted/50 text-foreground hover:bg-muted"
                   )}
                 >
                   <span className="font-medium">{item.question}</span>
