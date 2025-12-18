@@ -6,6 +6,7 @@ import vanSnowMountains from "@/assets/lifestyle/van-snow-mountains.jpg";
 const HeroSection = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,13 +81,26 @@ const HeroSection = () => {
         }}
       >
         <div className="relative w-full h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh] rounded-2xl overflow-hidden shadow-lift-lg">
-          {/* Hero Image */}
+          {/* Thumbnail - shows while video loads */}
           <img
             src={vanSnowMountains}
             alt="Digital nomad lifestyle - van in snowy mountain landscape"
-            className="absolute inset-0 w-full h-full object-cover"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
             loading="eager"
             fetchPriority="high"
+          />
+          
+          {/* Video - fades in when loaded */}
+          <video
+            src="/videos/hero-background.mp4"
+            poster={vanSnowMountains}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            onCanPlayThrough={() => setIsVideoLoaded(true)}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
           />
           
           {/* Dynamic white overlay for text readability - increases with scroll */}
