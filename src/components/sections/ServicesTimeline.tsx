@@ -11,8 +11,8 @@ import workingAtBeach from "@/assets/lifestyle/working-at-beach.jpg";
 import vanSnowMountains from "@/assets/lifestyle/van-snow-mountains.jpg";
 
 const BulletItem = ({ children }: { children: React.ReactNode }) => (
-  <li className="flex items-start gap-2 text-muted-foreground text-base md:text-lg">
-    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+  <li className="flex items-start gap-2 text-foreground text-base md:text-lg">
+    <span className="w-1.5 h-1.5 rounded-full bg-foreground mt-2.5 flex-shrink-0" />
     <span>{children}</span>
   </li>
 );
@@ -24,7 +24,7 @@ const ServicesTimeline = () => {
       content: (
         <div>
           <p className="text-foreground text-base md:text-lg font-medium mb-4">
-            <span className="text-primary font-semibold">For:</span> US taxpayers who want filing done correctly and stress-free.
+            <span className="font-semibold">For:</span> US taxpayers who want filing done correctly and stress-free.
           </p>
 
           <div className="mb-4">
@@ -42,7 +42,7 @@ const ServicesTimeline = () => {
             <span className="font-medium text-foreground">Not for:</span> aggressive loopholes or risky deductions.
           </p>
 
-          <div className="flex items-center gap-2 text-primary mb-8">
+          <div className="flex items-center gap-2 text-foreground mb-8">
             <FileText className="h-5 w-5" />
             <span className="font-medium text-base md:text-lg">Secure portal + guided process</span>
           </div>
@@ -71,7 +71,7 @@ const ServicesTimeline = () => {
       content: (
         <div>
           <p className="text-foreground text-base md:text-lg font-medium mb-4">
-            <span className="text-primary font-semibold">For:</span> business owners + freelancers who want a plan (not surprises).
+            <span className="font-semibold">For:</span> business owners + freelancers who want a plan (not surprises).
           </p>
 
           <div className="mb-4">
@@ -85,7 +85,7 @@ const ServicesTimeline = () => {
             </ul>
           </div>
 
-          <div className="flex items-center gap-2 text-primary mb-8">
+          <div className="flex items-center gap-2 text-foreground mb-8">
             <Sparkles className="h-5 w-5" />
             <span className="font-medium text-base md:text-lg">Clear action steps you can follow</span>
           </div>
@@ -114,7 +114,7 @@ const ServicesTimeline = () => {
       content: (
         <div>
           <p className="text-foreground text-base md:text-lg font-medium mb-4">
-            <span className="text-primary font-semibold">For:</span> people who need clarity before choosing a service.
+            <span className="font-semibold">For:</span> people who need clarity before choosing a service.
           </p>
 
           <div className="mb-4">
@@ -131,7 +131,7 @@ const ServicesTimeline = () => {
             <span className="font-medium text-foreground">Not for:</span> full tax filing or long-term support.
           </p>
 
-          <div className="flex items-center gap-2 text-primary mb-8">
+          <div className="flex items-center gap-2 text-foreground mb-8">
             <Compass className="h-5 w-5" />
             <span className="font-medium text-base md:text-lg">Quick clarity + direction</span>
           </div>
