@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { useQuiz } from "@/contexts/QuizContext";
 import vanSnowMountains from "@/assets/lifestyle/van-snow-mountains.jpg";
 
 const HeroSection = () => {
-  const navigate = useNavigate();
+  const { openQuiz } = useQuiz();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -14,10 +14,11 @@ const HeroSection = () => {
 
   const handleResidenceSubmit = () => {
     if (residenceInput.trim()) {
-      navigate(`/quiz-preview?residence=${encodeURIComponent(residenceInput.trim())}`);
+      openQuiz(residenceInput.trim());
     } else {
-      navigate("/quiz-preview");
+      openQuiz();
     }
+    setResidenceInput("");
   };
 
   useEffect(() => {
@@ -97,8 +98,8 @@ const HeroSection = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button variant="cta" size="xl" asChild>
-                <Link to="/quiz-preview">Get Started</Link>
+              <Button variant="cta" size="xl" onClick={() => openQuiz()}>
+                Get Started
               </Button>
               <Button variant="outline-cta" size="xl" asChild>
                 <a href="#about">Learn More</a>

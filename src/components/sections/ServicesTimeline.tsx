@@ -1,8 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Timeline } from "@/components/ui/timeline";
 import { FileText, Sparkles, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useQuiz } from "@/contexts/QuizContext";
 
 // Tax Preparation images
 import taxPrep1 from "@/assets/services/tax-preparation-1.jpg";
@@ -22,6 +22,8 @@ const BulletItem = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServicesTimeline = () => {
+  const { openQuiz } = useQuiz();
+
   const data = [
     {
       title: "1. Tax Preparation",
@@ -64,8 +66,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4" asChild>
-            <Link to="/quiz-preview">Get Started</Link>
+          <Button variant="cta" className="mt-4" onClick={() => openQuiz()}>
+            Get Started
           </Button>
         </div>
       ),
@@ -107,8 +109,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4" asChild>
-            <Link to="/quiz-preview">Get Started</Link>
+          <Button variant="cta" className="mt-4" onClick={() => openQuiz()}>
+            Get Started
           </Button>
         </div>
       ),
@@ -153,8 +155,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4" asChild>
-            <Link to="/quiz-preview">Get Started</Link>
+          <Button variant="cta" className="mt-4" onClick={() => openQuiz()}>
+            Get Started
           </Button>
         </div>
       ),

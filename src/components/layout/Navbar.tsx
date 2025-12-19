@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navigation } from "@/config/brand";
 import { Button } from "@/components/ui/button";
 import { logoTaxQueenMain } from "@/assets";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const Navbar = () => {
+  const { openQuiz } = useQuiz();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -54,8 +55,12 @@ const Navbar = () => {
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <Button variant="cta" className={`transition-all duration-300 ${isScrolled ? "text-sm px-4 py-1" : ""}`} asChild>
-            <Link to="/quiz-preview">Get Started</Link>
+          <Button 
+            variant="cta" 
+            className={`transition-all duration-300 ${isScrolled ? "text-sm px-4 py-1" : ""}`}
+            onClick={() => openQuiz()}
+          >
+            Get Started
           </Button>
         </div>
 
@@ -90,8 +95,15 @@ const Navbar = () => {
             </li>
           ))}
           <li>
-            <Button variant="cta" className="w-full" asChild>
-              <Link to="/quiz-preview">Get Started</Link>
+            <Button 
+              variant="cta" 
+              className="w-full"
+              onClick={() => {
+                setIsOpen(false);
+                openQuiz();
+              }}
+            >
+              Get Started
             </Button>
           </li>
         </ul>

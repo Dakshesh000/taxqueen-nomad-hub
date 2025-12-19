@@ -1,11 +1,12 @@
 import { useState, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { heatherPortrait } from '@/assets';
+import { useQuiz } from '@/contexts/QuizContext';
 
 const AboutSection = () => {
+  const { openQuiz } = useQuiz();
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
@@ -125,8 +126,8 @@ const AboutSection = () => {
             </div>
 
             {/* CTA Button */}
-            <Button variant="cta" size="lg" asChild>
-              <Link to="/quiz-preview">Get Started</Link>
+            <Button variant="cta" size="lg" onClick={() => openQuiz()}>
+              Get Started
             </Button>
           </div>
         </div>
