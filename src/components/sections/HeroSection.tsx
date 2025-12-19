@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useQuiz } from "@/contexts/QuizContext";
@@ -102,7 +103,7 @@ const HeroSection = () => {
                 Get Started
               </Button>
               <Button variant="outline-cta" size="xl" asChild>
-                <a href="#about">Learn More</a>
+                <Link to="/services">Learn More</Link>
               </Button>
             </div>
           </div>
@@ -152,7 +153,7 @@ const HeroSection = () => {
               <input
                 type="text"
                 placeholder="Your domicile state or current country of residence is..."
-                className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-base"
+                className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-base text-center"
                 value={residenceInput}
                 onChange={(e) => setResidenceInput(e.target.value)}
                 onKeyDown={(e) => {

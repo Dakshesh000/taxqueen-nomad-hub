@@ -26,6 +26,7 @@ export { default as droneRvsCamping } from './lifestyle/drone-rvs-camping.jpg';
 export { default as freedomNomad } from './lifestyle/freedom-nomad.jpg';
 export { default as sunsetRvReflection } from './lifestyle/sunset-rv-reflection.png';
 export { default as taxQueenInVan } from './lifestyle/tax-queen-in-van.jpg';
+export { default as womanWorkingViews3 } from './lifestyle/woman-working-views-3.jpg';
 
 // Blog/Resources Photos
 export { default as workingAtBeach } from './lifestyle/working-at-beach.jpg';
