@@ -1,13 +1,14 @@
 import { Play, HelpCircle, MessageSquare, Upload, CheckCircle } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ServicesTimeline from "@/components/sections/ServicesTimeline";
 import heatherPortrait from "@/assets/heather/portrait-square.png";
+import { useQuiz } from "@/contexts/QuizContext";
 
 const Services = () => {
+  const { openQuiz } = useQuiz();
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const processSteps = [
@@ -109,9 +110,9 @@ const Services = () => {
                 variant="cta"
                 size="lg"
                 className="rounded-full"
-                asChild
+                onClick={() => openQuiz()}
               >
-                <Link to="/quiz-preview">Take the Quiz</Link>
+                Take the Quiz
               </Button>
             </div>
           </div>
