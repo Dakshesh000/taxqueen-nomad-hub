@@ -1,5 +1,6 @@
 import { Play, HelpCircle, MessageSquare, Upload, CheckCircle } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -105,12 +106,12 @@ const Services = () => {
                 Take our quick quiz to find the perfect fit for your unique tax situation.
               </p>
               <Button
-                variant="outline"
+                variant="cta"
                 size="lg"
-                className="rounded-full cursor-not-allowed opacity-70"
-                disabled
+                className="rounded-full"
+                asChild
               >
-                Quiz Coming Soon
+                <Link to="/quiz-preview">Take the Quiz</Link>
               </Button>
             </div>
           </div>

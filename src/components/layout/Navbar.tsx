@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { navigation } from "@/config/brand";
 import { Button } from "@/components/ui/button";
@@ -53,8 +54,8 @@ const Navbar = () => {
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <Button variant="cta" className={`transition-all duration-300 ${isScrolled ? "text-sm px-4 py-1" : ""}`}>
-            Get Started
+          <Button variant="cta" className={`transition-all duration-300 ${isScrolled ? "text-sm px-4 py-1" : ""}`} asChild>
+            <Link to="/quiz-preview">Get Started</Link>
           </Button>
         </div>
 
@@ -89,7 +90,9 @@ const Navbar = () => {
             </li>
           ))}
           <li>
-            <Button variant="cta" className="w-full">Get Started</Button>
+            <Button variant="cta" className="w-full" asChild>
+              <Link to="/quiz-preview">Get Started</Link>
+            </Button>
           </li>
         </ul>
       </div>

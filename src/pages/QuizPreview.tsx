@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Globe,
@@ -63,6 +64,8 @@ interface QuizAnswers {
 const TOTAL_STEPS = 8;
 
 const QuizPreview = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [showResults, setShowResults] = useState(false);
@@ -83,6 +86,20 @@ const QuizPreview = () => {
     email: "",
     phone: "",
   });
+
+  // Check for residence URL param and auto-open quiz
+  useEffect(() => {
+    const residenceParam = searchParams.get("residence");
+    if (residenceParam) {
+      // Pre-fill residence and start at step 2
+      setAnswers(prev => ({ ...prev, residence: residenceParam }));
+      setCurrentStep(2);
+      setSessionId(crypto.randomUUID());
+      setIsModalOpen(true);
+      // Clear the URL param
+      navigate("/quiz-preview", { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   // Generate session ID when quiz opens
   useEffect(() => {
@@ -288,21 +305,6 @@ const QuizPreview = () => {
       case 1:
         return (
           <QuestionWrapper
-            title="Do you have US tax obligations?"
-            helpText="US tax obligations apply to US citizens, green card holders, or anyone meeting the substantial presence test—including non-citizens with US-source income."
-            backgroundImage={rvCoastalDrive}
-          >
-            <YesNoQuestion
-              value={answers.usTaxObligations}
-              onChange={(val) => setAnswers({ ...answers, usTaxObligations: val })}
-              onSelect={handleAutoAdvance}
-            />
-          </QuestionWrapper>
-        );
-
-      case 2:
-        return (
-          <QuestionWrapper
             title="Where are you residing currently?"
             subtitle="Your domicile state or country of residence."
             backgroundImage={vanSnowMountains}
@@ -315,20 +317,37 @@ const QuizPreview = () => {
             />
             <div className="mt-5 flex justify-center gap-3">
               <Button
-                variant="outline"
-                className="rounded-full text-foreground border-muted-foreground/30 hover:bg-muted"
-                onClick={goToPrevStep}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <Button
                 className="rounded-full px-6"
                 onClick={goToNextStep}
                 disabled={!answers.residence.trim()}
               >
                 Continue
                 <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </QuestionWrapper>
+        );
+
+      case 2:
+        return (
+          <QuestionWrapper
+            title="Do you have US tax obligations?"
+            helpText="US tax obligations apply to US citizens, green card holders, or anyone meeting the substantial presence test—including non-citizens with US-source income."
+            backgroundImage={rvCoastalDrive}
+          >
+            <YesNoQuestion
+              value={answers.usTaxObligations}
+              onChange={(val) => setAnswers({ ...answers, usTaxObligations: val })}
+              onSelect={handleAutoAdvance}
+            />
+            <div className="mt-5 flex justify-center gap-3">
+              <Button
+                variant="outline"
+                className="rounded-full text-foreground border-muted-foreground/30 hover:bg-muted"
+                onClick={goToPrevStep}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
               </Button>
             </div>
           </QuestionWrapper>

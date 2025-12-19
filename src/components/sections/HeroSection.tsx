@@ -1,13 +1,24 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import vanSnowMountains from "@/assets/lifestyle/van-snow-mountains.jpg";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [residenceInput, setResidenceInput] = useState("");
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleResidenceSubmit = () => {
+    if (residenceInput.trim()) {
+      navigate(`/quiz-preview?residence=${encodeURIComponent(residenceInput.trim())}`);
+    } else {
+      navigate("/quiz-preview");
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,11 +97,11 @@ const HeroSection = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button variant="cta" size="xl">
-                Get Started
+              <Button variant="cta" size="xl" asChild>
+                <Link to="/quiz-preview">Get Started</Link>
               </Button>
-              <Button variant="outline-cta" size="xl">
-                Learn More
+              <Button variant="outline-cta" size="xl" asChild>
+                <a href="#about">Learn More</a>
               </Button>
             </div>
           </div>
@@ -142,9 +153,18 @@ const HeroSection = () => {
                 type="text"
                 placeholder="Your domicile state or current country of residence is..."
                 className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none text-base"
-                readOnly
+                value={residenceInput}
+                onChange={(e) => setResidenceInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleResidenceSubmit();
+                  }
+                }}
               />
-              <button className="bg-primary text-primary-foreground px-5 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors flex items-center gap-2">
+              <button 
+                onClick={handleResidenceSubmit}
+                className="bg-primary text-primary-foreground px-5 py-3 rounded-full font-medium hover:bg-primary/90 transition-colors flex items-center gap-2"
+              >
                 <span>Enter</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m9 18 6-6-6-6"/>

@@ -1,4 +1,5 @@
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -124,8 +125,8 @@ const AboutSection = () => {
             </div>
 
             {/* CTA Button */}
-            <Button variant="cta" size="lg">
-              Get Started
+            <Button variant="cta" size="lg" asChild>
+              <Link to="/quiz-preview">Get Started</Link>
             </Button>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Timeline } from "@/components/ui/timeline";
 import { FileText, Sparkles, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -63,8 +64,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4">
-            Get Started
+          <Button variant="cta" className="mt-4" asChild>
+            <Link to="/quiz-preview">Get Started</Link>
           </Button>
         </div>
       ),
@@ -106,8 +107,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4">
-            Get Started
+          <Button variant="cta" className="mt-4" asChild>
+            <Link to="/quiz-preview">Get Started</Link>
           </Button>
         </div>
       ),
@@ -152,8 +153,8 @@ const ServicesTimeline = () => {
             />
           </div>
 
-          <Button variant="cta" className="mt-4">
-            Get Started
+          <Button variant="cta" className="mt-4" asChild>
+            <Link to="/quiz-preview">Get Started</Link>
           </Button>
         </div>
       ),
