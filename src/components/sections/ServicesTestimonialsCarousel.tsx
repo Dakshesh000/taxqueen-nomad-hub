@@ -1,58 +1,62 @@
 import { useEffect, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 
+// Testimonials with avatars - pulled from TestimonialsSection
 const testimonials = [
   {
-    text: "Excellent service. Quick turnaround. Heather has surpassed any previous tax preparer I've had. She is knowledgeable and very personable.",
+    text: "Excellent service. Quick turnaround. Heather has surpassed any previous tax preparer with her customer service, and we will be back year after year for our tax preparation.",
     name: "Jon K.",
-    role: "Digital Nomad",
+    role: "Personal Return",
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
   },
   {
-    text: "You're the BEST! You are so prompt and super helpful (and patient!). I really appreciate how thorough you are.",
-    name: "Sevilla",
-    role: "Business Owner",
-  },
-  {
-    text: "Taxes have been an enormous stressor since I moved to Portugal. Having a pro like Heather on my side made this year so much easier!",
+    text: "Taxes have been an enormous stressor since I moved to Portugal and this could not have been a more straightforward process. If there is a review I can write advocating for your services let me know!",
     name: "Catherine",
-    role: "Expat Entrepreneur",
+    role: "Expat",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
   },
   {
-    text: "I trust you and you know my taxes intimately. You've saved me thousands over the years with your expertise.",
-    name: "Bina J.",
-    role: "Full-Time RVer",
-  },
-  {
-    text: "Heather has been our tax accountant for 11 years. She's thorough, responsive, and genuinely cares about her clients.",
+    text: "Heather has been our tax accountant for 11 years and has been consistently great to work with providing timely responses to all our questions and rapid processing of our tax returns.",
     name: "Mike M.",
-    role: "Small Business Owner",
+    role: "11-Year Client",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
   },
   {
-    text: "She is as sharp as they come. The perfect fit for our needs as digital nomads with multiple income streams.",
+    text: "I trust you and you know my taxes intimately. You have been the best thing to happen to me and my taxes and I wish I had worked with you from the beginning!",
+    name: "Bina J.",
+    role: "Personal & S-Corp",
+    avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    text: "You're the BEST! You are so prompt and super helpful (and patient!). Thank you!",
+    name: "Sevilla",
+    role: "Personal",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
+  },
+  {
+    text: "I have been working with Heather for over 4 years now and she is as sharp as they come. The perfect fit for our needs. She helps us keep our books clean for tax time while helping me make critical business decisions.",
     name: "James W.",
-    role: "Remote Worker",
+    role: "Weatherproof Roofing",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
   },
 ];
 
 const ServicesTestimonialsCarousel = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
-    align: "start",
-    slidesToScroll: 1,
+    align: "center",
   });
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setCanScrollPrev(emblaApi.canScrollPrev());
-    setCanScrollNext(emblaApi.canScrollNext());
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
   // Auto-scroll every 8 seconds
@@ -95,14 +99,13 @@ const ServicesTestimonialsCarousel = () => {
           </h2>
         </motion.div>
 
-        <div className="relative max-w-6xl mx-auto">
+        <div className="relative max-w-3xl mx-auto">
           {/* Navigation Buttons */}
           <Button
             variant="outline"
             size="icon"
             onClick={scrollPrev}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 rounded-full bg-background shadow-lg hidden md:flex"
-            disabled={!canScrollPrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 rounded-full bg-background shadow-lg"
           >
             <ChevronLeft className="h-5 w-5" />
           </Button>
@@ -111,61 +114,59 @@ const ServicesTestimonialsCarousel = () => {
             variant="outline"
             size="icon"
             onClick={scrollNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 rounded-full bg-background shadow-lg hidden md:flex"
-            disabled={!canScrollNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 rounded-full bg-background shadow-lg"
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
 
-          {/* Carousel */}
+          {/* Single Testimonial Carousel */}
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-6">
+            <div className="flex">
               {testimonials.map((testimonial, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
+                  className="flex-shrink-0 w-full px-4"
                 >
-                  <div className="bg-secondary rounded-2xl p-6 h-full border border-border shadow-sm">
-                    <Quote className="w-8 h-8 text-primary/30 mb-4" />
-                    <p className="text-foreground leading-relaxed mb-6">
+                  <div className="flex flex-col items-center text-center py-8">
+                    {/* Avatar */}
+                    <img
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      className="w-20 h-20 rounded-full object-cover mb-6 border-4 border-primary/20"
+                    />
+                    
+                    {/* Quote */}
+                    <blockquote className="text-xl md:text-2xl italic text-foreground leading-relaxed max-w-2xl mb-6">
                       "{testimonial.text}"
-                    </p>
-                    <div className="mt-auto">
-                      <p className="font-bold text-foreground">
+                    </blockquote>
+                    
+                    {/* Attribution */}
+                    <cite className="not-italic">
+                      <span className="font-bold text-foreground text-lg">
                         {testimonial.name}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {testimonial.role}
-                      </p>
-                    </div>
+                      </span>
+                      <span className="text-muted-foreground"> — {testimonial.role}</span>
+                    </cite>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Mobile Navigation */}
-          <div className="flex justify-center gap-4 mt-8 md:hidden">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollPrev}
-              className="rounded-full"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={scrollNext}
-              className="rounded-full"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </Button>
+          {/* Dot Indicators */}
+          <div className="flex justify-center gap-2 mt-6">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => emblaApi?.scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  selectedIndex === index
+                    ? "bg-primary w-6"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                }`}
+                aria-label={`Go to testimonial ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
