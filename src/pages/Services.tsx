@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import ServicesTimeline from "@/components/sections/ServicesTimeline";
+import ServicesCards from "@/components/sections/ServicesCards";
 import GlobalQuiz from "@/components/quiz/GlobalQuiz";
 import { heatherVideoThumbnail } from "@/assets";
 import { QuizProvider } from "@/contexts/QuizContext";
@@ -119,8 +119,8 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Services Timeline - Existing Component */}
-      <ServicesTimeline />
+      {/* Services Cards */}
+      <ServicesCards />
 
       {/* How It Works - 4 Step Process */}
       <section className="py-16 md:py-24 bg-secondary">

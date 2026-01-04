@@ -6,7 +6,7 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ComprehensiveFAQSection from "@/components/sections/ComprehensiveFAQSection";
 import BlogSection from "@/components/sections/BlogSection";
 import CompassChatButton from "@/components/CompassChatButton";
-import ServicesTimeline from "@/components/sections/ServicesTimeline";
+import ServicesCards from "@/components/sections/ServicesCards";
 import ComparisonSection from "@/components/sections/ComparisonSection";
 import ParallaxDivider from "@/components/ui/ParallaxDivider";
 import FeaturedInSection from "@/components/sections/FeaturedInSection";
@@ -36,7 +36,7 @@ const Index = () => {
           text="Life on Your Terms"
           subtext="Work from anywhere while we handle the tax complexities"
         />
-        <ServicesTimeline />
+        <ServicesCards />
         <ParallaxDivider 
           image={sunsetRvReflection}
           text="Your Journey Starts Here"
