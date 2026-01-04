@@ -9,7 +9,7 @@ const excellentFitItems = [
 ];
 
 const notReadyYetItems = [
-  "You have questions but aren't ready to hire a pro",
+  "You're still in a traditional home working 9-to-5",
   "You'd rather do your own taxes",
   "Your business is still just an idea",
   "You're still in a traditional home and 9-to-5",
