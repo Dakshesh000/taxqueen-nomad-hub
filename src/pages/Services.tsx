@@ -6,8 +6,9 @@ import GlobalQuiz from "@/components/quiz/GlobalQuiz";
 import ProcessStepsSection from "@/components/sections/ProcessStepsSection";
 import ComparisonSection from "@/components/sections/ComparisonSection";
 import ServicesTestimonialsCarousel from "@/components/sections/ServicesTestimonialsCarousel";
+import ServicesCards from "@/components/sections/ServicesCards";
 import { QuizProvider, useQuiz } from "@/contexts/QuizContext";
-import { truckStormySky, heatherPortrait } from "@/assets";
+import { truckStormySky, heatherPortrait, sunsetRvReflection } from "@/assets";
 
 const ServicesContent = () => {
   const { openQuiz } = useQuiz();
@@ -23,27 +24,31 @@ const ServicesContent = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      {/* Full-Width Hero Image with Text Overlay */}
-      <section className="relative h-[60vh] min-h-[400px] w-full">
-        <img
-          src={truckStormySky}
-          alt="Digital nomad lifestyle"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-foreground/60" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center px-4">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white uppercase leading-tight">
-              Tax Prep, Tax Review and Tax Planning
-              <br />
-              <span className="text-primary-foreground">For Digital Nomads</span>
-            </h1>
+      {/* Hero Section - Container with Rounded Image */}
+      <section className="pt-24 pb-8 md:pt-28 md:pb-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative rounded-2xl overflow-hidden h-[350px] md:h-[400px]">
+            <img
+              src={truckStormySky}
+              alt="Digital nomad lifestyle"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-foreground/50" />
+            
+            {/* Text - Bottom Left Aligned */}
+            <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 max-w-2xl">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white uppercase leading-tight">
+                Tax Prep, Tax Review and Tax Planning
+                <br />
+                <span className="text-primary-foreground">For Digital Nomads</span>
+              </h1>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Two-Column Content Section */}
-      <section className="py-16 md:py-24 bg-secondary">
+      {/* Two-Column Content Section - White Background */}
+      <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
@@ -83,11 +88,14 @@ const ServicesContent = () => {
         </div>
       </section>
 
+      {/* Services Cards */}
+      <ServicesCards />
+
       {/* How It Works - ProcessStepsSection */}
       <ProcessStepsSection />
 
-      {/* Quiz Embedded Section */}
-      <section id="quiz" className="py-16 bg-secondary">
+      {/* Quiz Embedded Section - White Background */}
+      <section id="quiz" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
@@ -108,22 +116,28 @@ const ServicesContent = () => {
         </div>
       </section>
 
-      {/* Testimonials Carousel */}
+      {/* Testimonials - Single View Carousel */}
       <ServicesTestimonialsCarousel />
 
       {/* Who's A Good Fit - ComparisonSection */}
       <ComparisonSection />
 
-      {/* Small CTA Section */}
-      <section className="py-12 md:py-16 bg-primary">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground uppercase mb-6">
+      {/* CTA Section with Background Image */}
+      <section className="relative py-16 md:py-20">
+        <img
+          src={sunsetRvReflection}
+          alt="Sunset RV reflection"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-foreground/60" />
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white uppercase mb-6">
             Ready to Take Control of Your Taxes?
           </h2>
           <Button
-            variant="glass"
+            variant="cta"
             size="lg"
-            className="rounded-full bg-white/20 text-white border-white/30 hover:bg-white/30"
+            className="rounded-full"
             onClick={() => openQuiz()}
           >
             Get Started
