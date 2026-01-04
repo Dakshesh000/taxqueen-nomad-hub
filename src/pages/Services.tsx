@@ -27,7 +27,7 @@ const ServicesContent = () => {
       {/* Hero Section - Container with Rounded Image */}
       <section className="pt-24 pb-8 md:pt-28 md:pb-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-2xl overflow-hidden h-[350px] md:h-[400px]">
+          <div className="relative rounded-2xl overflow-hidden h-[280px] md:h-[320px]">
             <img
               src={truckStormySky}
               alt="Digital nomad lifestyle"
@@ -48,7 +48,7 @@ const ServicesContent = () => {
       </section>
 
       {/* Two-Column Content Section - White Background */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
@@ -65,9 +65,7 @@ const ServicesContent = () => {
               <ul className="space-y-3">
                 {painPoints.map((point, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3 h-3 text-primary" />
-                    </div>
+                    <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <span className="text-muted-foreground">{point}</span>
                   </li>
                 ))}
@@ -80,7 +78,7 @@ const ServicesContent = () => {
                 <img
                   src={heatherPortrait}
                   alt="Heather - Tax Queen"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover max-h-[420px] object-top"
                 />
               </div>
             </div>
@@ -93,6 +91,9 @@ const ServicesContent = () => {
 
       {/* How It Works - ProcessStepsSection */}
       <ProcessStepsSection />
+
+      {/* Testimonials - Single View Carousel */}
+      <ServicesTestimonialsCarousel />
 
       {/* Quiz Embedded Section - White Background */}
       <section id="quiz" className="py-16 bg-background">
@@ -116,9 +117,6 @@ const ServicesContent = () => {
         </div>
       </section>
 
-      {/* Testimonials - Single View Carousel */}
-      <ServicesTestimonialsCarousel />
-
       {/* Who's A Good Fit - ComparisonSection */}
       <ComparisonSection />
 
@@ -131,9 +129,12 @@ const ServicesContent = () => {
         />
         <div className="absolute inset-0 bg-foreground/60" />
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-white uppercase mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold text-white uppercase mb-4">
             Ready to Take Control of Your Taxes?
           </h2>
+          <p className="text-white/90 text-lg md:text-xl max-w-xl mx-auto mb-8">
+            Stop stressing about taxes and start enjoying the nomad life you deserve.
+          </p>
           <Button
             variant="cta"
             size="lg"
