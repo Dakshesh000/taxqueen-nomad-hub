@@ -7,7 +7,7 @@ import { QuizProvider } from "@/contexts/QuizContext";
 import GlobalQuiz from "@/components/quiz/GlobalQuiz";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import TemplatePreview from "./pages/TemplatePreview";
+import DesignGuide from "./pages/DesignGuide";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
@@ -39,7 +39,7 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/template-preview" element={<TemplatePreview />} />
+            <Route path="/design-guide" element={<DesignGuide />} />
             <Route path="/quiz-preview" element={<QuizPreview />} />
             <Route path="/admin-login" element={<AdminLogin />} />
             <Route path="/admin" element={<Admin />} />
