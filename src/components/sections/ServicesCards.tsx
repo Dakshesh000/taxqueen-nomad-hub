@@ -14,12 +14,25 @@ interface ServiceCardProps {
   title: string;
   subtitle: string;
   features: string[];
+  valueProp: string;
+  qualifier?: string;
+  ctaText: string;
   onGetStarted: () => void;
 }
 
-const ServiceCard = ({ image, icon: Icon, title, subtitle, features, onGetStarted }: ServiceCardProps) => (
-  <div className="group bg-background rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border">
-    {/* Header Image with Icon Badge */}
+const ServiceCard = ({ 
+  image, 
+  icon: Icon, 
+  title, 
+  subtitle, 
+  features, 
+  valueProp, 
+  qualifier, 
+  ctaText, 
+  onGetStarted 
+}: ServiceCardProps) => (
+  <div className="group flex flex-col bg-background rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border h-full">
+    {/* Header Image with Dark Overlay and Icon Badge */}
     <div className="relative aspect-[4/3] overflow-hidden">
       <img
         src={image}
@@ -27,13 +40,16 @@ const ServiceCard = ({ image, icon: Icon, title, subtitle, features, onGetStarte
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
       />
-      <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg">
+      {/* Dark overlay - fades on hover */}
+      <div className="absolute inset-0 bg-black/40 transition-opacity duration-500 group-hover:opacity-0 z-10" />
+      {/* Icon badge above overlay */}
+      <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg z-20">
         <Icon className="w-6 h-6 text-primary-foreground" />
       </div>
     </div>
 
     {/* Content */}
-    <div className="p-6 flex flex-col">
+    <div className="p-6 flex flex-col flex-grow">
       <h3 className="text-xl md:text-2xl font-bold text-foreground uppercase mb-2">
         {title}
       </h3>
@@ -43,7 +59,7 @@ const ServiceCard = ({ image, icon: Icon, title, subtitle, features, onGetStarte
       </p>
 
       {/* Features List */}
-      <ul className="space-y-2 mb-6 flex-grow">
+      <ul className="space-y-2 mb-4">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-2 text-foreground text-sm md:text-base">
             <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
@@ -52,8 +68,21 @@ const ServiceCard = ({ image, icon: Icon, title, subtitle, features, onGetStarte
         ))}
       </ul>
 
-      <Button variant="cta" className="w-full rounded-full" onClick={onGetStarted}>
-        Get Started
+      {/* Qualifier (optional) */}
+      {qualifier && (
+        <p className="text-xs text-muted-foreground italic mb-3">
+          {qualifier}
+        </p>
+      )}
+
+      {/* Value Proposition */}
+      <p className="text-foreground font-bold text-sm md:text-base mb-6">
+        {valueProp}
+      </p>
+
+      {/* CTA Button - pushed to bottom */}
+      <Button variant="cta" className="w-full rounded-full mt-auto" onClick={onGetStarted}>
+        {ctaText}
       </Button>
     </div>
   </div>
@@ -69,35 +98,42 @@ const ServicesCards = () => {
       title: "Tax Preparation",
       subtitle: "For US taxpayers who want filing done correctly and stress-free.",
       features: [
-        "Federal + state filing",
-        "Self-employment & business income",
+        "Federal + state filing for nomads",
+        "Self-employment & business income handled",
         "Foreign Tax Credits (Form 1116)",
-        "FBAR & FATCA reporting",
+        "FBAR & FATCA compliance included",
       ],
-    },
-    {
-      image: taxStrategy1,
-      icon: Sparkles,
-      title: "Tax Strategy & Planning",
-      subtitle: "For business owners + freelancers who want a plan (not surprises).",
-      features: [
-        "Quarterly tax planning",
-        "Deduction & credits optimization",
-        "LLC vs S-Corp clarity",
-        "Year-round support",
-      ],
+      valueProp: "Avoid costly mistakes and take every deduction and credit.",
+      ctaText: "Get stress-free tax prep",
     },
     {
       image: miniSession1,
       icon: Compass,
-      title: "Mini Tax Session",
-      subtitle: "For people who need clarity before choosing a service.",
+      title: "Mini Tax Plan",
+      subtitle: "For those who need clarity on their current tax situation.",
       features: [
-        "Domicile & residency questions",
-        "Deductions reality-check",
-        "Next steps for your situation",
-        "Custom action plan",
+        "Retirement contribution guidance",
+        "Estimated quarterly payment review",
+        "Personalized situation analysis",
+        "Follow-up call for Q&A",
       ],
+      valueProp: "Stay on track with quarterly payments and avoid surprises.",
+      ctaText: "I need a mini tax plan",
+    },
+    {
+      image: taxStrategy1,
+      icon: Sparkles,
+      title: "Tax Strategy",
+      subtitle: "For business owners + freelancers who want a proactive plan.",
+      features: [
+        "Year-round tax optimization",
+        "LLC vs S-Corp strategy",
+        "Adjust as your situation changes",
+        "Reduce your tax bill proactively",
+      ],
+      qualifier: "*For high-income earners with business and/or rental property.",
+      valueProp: "Get a plan in place and a tax advisor to keep you on track.",
+      ctaText: "Get help with tax strategy",
     },
   ];
 
@@ -115,7 +151,7 @@ const ServicesCards = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch">
           {services.map((service) => (
             <ServiceCard
               key={service.title}
