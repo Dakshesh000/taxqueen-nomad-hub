@@ -92,7 +92,7 @@ const TestimonialsSection = () => {
             Testimonials
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-foreground tracking-tight text-center uppercase">
-            What Our Clients Say
+            What My Clients Say
           </h2>
           <p className="text-center mt-4 text-primary-foreground/80">
             Real stories from digital nomads and business owners who trust Tax Queen with their taxes.
