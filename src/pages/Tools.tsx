@@ -47,7 +47,7 @@ const tools: Tool[] = [
     description: "Looking to form an LLC? Start your business the right way with help from Northwest Registered Agent. They can register in all 50 states.",
     category: "business",
     ctaText: "Start an LLC",
-    ctaUrl: "#",
+    ctaUrl: "https://www.shareasale.com/r.cfm?b=965743&u=1689092&m=69959",
     offer: "Register a new LLC for $39 only available using the link below!",
     logo: logoNorthwest,
   },
@@ -57,7 +57,7 @@ const tools: Tool[] = [
     description: "One of the oldest and largest RV membership clubs in the world. They provide a total support network for all RVers, regardless of travel style, age, experience, or type of RV. Build community with like-minded folks. Get education and support today.",
     category: "lifestyle",
     ctaText: "Join Escapees",
-    ctaUrl: "#",
+    ctaUrl: "https://tax-queen.com/escapees",
     offer: "Save 20% on your membership",
     logo: logoEscapees,
   },
@@ -67,7 +67,7 @@ const tools: Tool[] = [
     description: "Navigate your way to tax savings with Florida residency, including a virtual mail service! SavvyNomad offers simple steps to establish your domicile and residency, which includes a mail forwarding service that satisfies a physical address for your banking needs.",
     category: "business",
     ctaText: "See Tax Savings",
-    ctaUrl: "#",
+    ctaUrl: "https://tax-queen.com/savvynomad",
     offer: "Save $60",
     discountCode: "taxqueen",
     logo: logoSavvyNomad,
@@ -78,7 +78,7 @@ const tools: Tool[] = [
     description: "QuickBooks is accounting software that offers cloud-based versions that help you keep your business finances organized. You can invoice clients, accept payments, manage and pay bills, and offers add-on services like merchant services. Very popular and easy to find tutorials!",
     category: "financial",
     ctaText: "Get QuickBooks",
-    ctaUrl: "#",
+    ctaUrl: "https://quickbooks.grsm.io/e2zxt7cu1m93",
     logo: logoQuickBooks,
   },
   {
@@ -87,7 +87,7 @@ const tools: Tool[] = [
     description: "Enjoy unique, safe and convenient RV camping with unlimited overnight stays at 9500+ local businesses across the USA and Canada. Harvest Hosts is a network of farms, wineries, breweries, golf courses, community hosts and more that invite RVers to stay overnight.",
     category: "lifestyle",
     ctaText: "Camp Today!",
-    ctaUrl: "#",
+    ctaUrl: "https://tax-queen.com/harvesthosts",
     offer: "Save 20% on your membership",
     logo: logoHarvestHosts,
   },
@@ -97,7 +97,7 @@ const tools: Tool[] = [
     description: "Struggling to find a bank that fits your digital nomad needs? Introducing Relay – an online small business bank built for entrepreneurs with NO FEES! Earn interest on your savings, integrate directly with QuickBooks Online, and more all with NO FEES and no minimum balances.",
     category: "financial",
     ctaText: "I Need Online Banking",
-    ctaUrl: "#",
+    ctaUrl: "https://www.relayfi.com/?referralcode=taxqueen&utm_source=influencer&utm_medium=course&utm_campaign=taxqueen",
     logo: logoRelay,
   },
   {
@@ -106,7 +106,7 @@ const tools: Tool[] = [
     description: "Gusto is a people platform for payroll, benefits, and more. This includes a single owner S Corp and any team members. Starting at $40/month +$6/employee or contractor. Gusto will make your payroll easy and efficient while keeping your business fully compliant with payroll tax filings.",
     category: "financial",
     ctaText: "Start Payroll with Gusto",
-    ctaUrl: "#",
+    ctaUrl: "https://gusto.com/partners/invite/tax-queen",
     logo: logoGusto,
   },
   {
@@ -115,7 +115,7 @@ const tools: Tool[] = [
     description: "Wave is bookkeeping designed for entrepreneurs that helps you make, move and manage your money. Truly understand and manage your income and expenses. This is a great alternative to QuickBooks. Track your expenses and income with automated bank feeds, reports, and more.",
     category: "financial",
     ctaText: "Join Wave",
-    ctaUrl: "#",
+    ctaUrl: "https://my.waveapps.com/register/",
     logo: logoWave,
   },
   {
@@ -124,7 +124,7 @@ const tools: Tool[] = [
     description: "MileIQ helps drivers from small business owners to enterprise organizations log every mile, making tax deductions and mileage reimbursements easy. Never worry about having mileage logs when you use MileIQ.",
     category: "financial",
     ctaText: "Track Miles",
-    ctaUrl: "#",
+    ctaUrl: "https://www.mileiq.com/",
     offer: "20% off",
     discountCode: "HRYA631A",
     logo: logoMileIQ,
@@ -135,7 +135,7 @@ const tools: Tool[] = [
     description: "Do you have contractors that you need to file 1099-NEC for? Look no further than this award-winning IRS authorized efiling platform for 1099s. Stay in compliance and easily file for the low starting cost of $2.90. Get electronic copies to share with your contractors and save for your records.",
     category: "financial",
     ctaText: "Efile your 1099s Now",
-    ctaUrl: "#",
+    ctaUrl: "https://get.tax1099.com/taxqueen",
     logo: logoZenwork,
   },
   {
@@ -144,7 +144,7 @@ const tools: Tool[] = [
     description: "Do you want to focus on growing your business instead of bookkeeping? Automate your bookkeeping to help ease your task list. Close your books each month using automation so you have important financial data at your fingertips.",
     category: "financial",
     ctaText: "Automate Bookkeeping",
-    ctaUrl: "#",
+    ctaUrl: "https://partners.docyt.com/63wzi0beyyyz",
     logo: logoDocyt,
   },
   {
@@ -153,7 +153,7 @@ const tools: Tool[] = [
     description: "Protect your business without hiring an attorney. Get instant access to attorney-reviewed, legally binding contract templates, guides, checklists, and over-the-shoulder video trainings to protect your business, filter out trouble clients, and get paid what you're owed when you're owed it!",
     category: "business",
     ctaText: "Protect Your Business Now",
-    ctaUrl: "#",
+    ctaUrl: "https://www.artfulcontracts.com/a/2147516970/XunMoNFi",
     offer: "10% off",
     discountCode: "Heather",
     logo: logoArtfulContracts,
@@ -179,7 +179,7 @@ const ToolCard = ({ tool }: { tool: Tool }) => {
       <Card className="h-full bg-background border border-border rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
         <CardContent className="p-6 flex flex-col h-full">
           {/* Logo Container */}
-          <div className="w-20 h-20 rounded-xl bg-white flex items-center justify-center mb-4 mx-auto p-2 overflow-hidden">
+          <div className="w-40 h-40 rounded-xl bg-white flex items-center justify-center mb-4 mx-auto p-3 overflow-hidden">
             <img 
               src={tool.logo} 
               alt={`${tool.name} logo`}
