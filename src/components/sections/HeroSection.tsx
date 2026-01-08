@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Check, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useQuiz } from "@/contexts/QuizContext";
 import { heroVideoThumbnail } from "@/assets";
 
@@ -136,27 +136,21 @@ const HeroSection = () => {
               pointerEvents: isLocked ? 'auto' : 'none'
             }}
           >
-            <div className="bg-black/40 backdrop-blur-sm rounded-2xl p-8 max-w-lg w-full text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            <div className="flex flex-wrap items-center justify-center gap-4 px-6">
+              <span className="text-xl sm:text-2xl font-semibold text-white drop-shadow-lg">
                 Do you have US Tax Obligations?
-              </h2>
-              <p className="text-sm text-white/70 mb-6">
-                US citizens, green card holders, or anyone with US-source income
-              </p>
-              <div className="flex gap-4 justify-center">
+              </span>
+              <div className="flex gap-3">
                 <Button
                   onClick={() => openQuiz("usTaxYes")}
-                  className="flex-1 max-w-[140px] h-14 text-lg rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg transition-all hover:scale-105"
+                  className="h-11 px-6 text-base rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg transition-all hover:scale-105"
                 >
-                  <Check className="w-5 h-5 mr-2" />
                   Yes
                 </Button>
                 <Button
                   onClick={() => openQuiz("usTaxNo")}
-                  variant="outline"
-                  className="flex-1 max-w-[140px] h-14 text-lg rounded-full border-2 border-white text-white hover:bg-white/20 font-semibold transition-all hover:scale-105"
+                  className="h-11 px-6 text-base rounded-full bg-white/90 hover:bg-white text-foreground font-semibold shadow-lg transition-all hover:scale-105"
                 >
-                  <X className="w-5 h-5 mr-2" />
                   No
                 </Button>
               </div>
