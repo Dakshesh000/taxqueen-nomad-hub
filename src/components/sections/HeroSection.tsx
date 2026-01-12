@@ -144,13 +144,13 @@ const HeroSection = () => {
                 <div className="flex gap-3">
                   <Button
                     onClick={() => openQuiz("usTaxYes")}
-                    className="h-11 px-6 text-base rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg transition-all hover:scale-105"
+                    className="h-11 px-6 text-base rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg transition-all hover:scale-105 border border-foreground"
                   >
                     Yes
                   </Button>
                   <Button
                     onClick={() => openQuiz("usTaxNo")}
-                    className="h-11 px-6 text-base rounded-full bg-white hover:bg-gray-50 text-foreground font-semibold shadow-lg transition-all hover:scale-105 border-2 border-foreground"
+                    className="h-11 px-6 text-base rounded-full bg-white hover:bg-gray-50 text-foreground font-semibold shadow-lg transition-all hover:scale-105 border border-foreground"
                   >
                     No
                   </Button>

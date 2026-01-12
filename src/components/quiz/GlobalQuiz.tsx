@@ -25,6 +25,8 @@ import {
   Sparkles,
   ArrowRight,
   ArrowLeft,
+  Compass,
+  Heart,
 } from "lucide-react";
 
 import QuestionWrapper from "@/components/quiz/QuestionWrapper";
@@ -50,6 +52,7 @@ import workingAtBeach from "@/assets/lifestyle/working-at-beach.jpg";
 import campingByRiver from "@/assets/lifestyle/camping-by-river.jpg";
 import heatherHikingNature from "@/assets/lifestyle/heather-hiking-nature.jpg";
 import sunsetRvReflection from "@/assets/lifestyle/sunset-rv-reflection.png";
+import rvAutumnLeaves from "@/assets/lifestyle/rv-autumn-leaves.jpg";
 
 // Import LQIP placeholders for blur-up effect
 import {
@@ -73,6 +76,7 @@ const QUIZ_BACKGROUND_IMAGES = [
   campingByRiver,
   heatherHikingNature,
   sunsetRvReflection,
+  rvAutumnLeaves,
 ];
 
 // Quiz state interface
@@ -81,6 +85,7 @@ interface QuizAnswers {
   incomeSources: string[];
   expatCountry: string;
   isExpat: boolean;
+  nomadicLife: string[];
   situations: string[];
   financialTracking: string | null;
   lookingFor: string[];
@@ -90,7 +95,13 @@ interface QuizAnswers {
   phone: string;
 }
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 9;
+
+// Email validation regex
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+// Phone validation regex - allows international formats with extensions
+const PHONE_REGEX = /^\+?[1-9]\d{0,2}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}(\s?(x|ext\.?|extension)\s?\d{1,5})?$/i;
 
 interface GlobalQuizProps {
   isEmbedded?: boolean;
@@ -103,6 +114,8 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
   const [isQualified, setIsQualified] = useState(false);
   const [sessionId, setSessionId] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailError, setEmailError] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
   const { toast } = useToast();
 
   const [answers, setAnswers] = useState<QuizAnswers>({
@@ -110,6 +123,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
     incomeSources: [],
     expatCountry: "",
     isExpat: true,
+    nomadicLife: [],
     situations: [],
     financialTracking: null,
     lookingFor: [],
@@ -126,6 +140,8 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
       setShowResults(false);
       setIsQualified(false);
       setIsSubmitting(false);
+      setEmailError("");
+      setPhoneError("");
       setSessionId(crypto.randomUUID());
 
       if (prefillUsTax === "usTaxYes") {
@@ -135,6 +151,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           incomeSources: [],
           expatCountry: "",
           isExpat: true,
+          nomadicLife: [],
           situations: [],
           financialTracking: null,
           lookingFor: [],
@@ -151,6 +168,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           incomeSources: [],
           expatCountry: "",
           isExpat: true,
+          nomadicLife: [],
           situations: [],
           financialTracking: null,
           lookingFor: [],
@@ -168,6 +186,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           incomeSources: [],
           expatCountry: "",
           isExpat: true,
+          nomadicLife: [],
           situations: [],
           financialTracking: null,
           lookingFor: [],
@@ -185,21 +204,27 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
   const incomeOptions = [
     { id: "business-freelance-1099", label: "Business Owner / Freelancing / Contract (1099)", icon: <Laptop className="w-5 h-5" /> },
     { id: "w2", label: "W-2 Employee", icon: <Briefcase className="w-5 h-5" /> },
+    { id: "retirement", label: "Retirement/SS/Pension", icon: <Wallet className="w-5 h-5" /> },
     { id: "rental", label: "Rental Income", icon: <Building className="w-5 h-5" /> },
     { id: "investments", label: "Investments", icon: <DollarSign className="w-5 h-5" /> },
-    { id: "retirement", label: "Retirement/SS/Pension", icon: <Wallet className="w-5 h-5" /> },
     { id: "other", label: "Other", icon: <MoreHorizontal className="w-5 h-5" /> },
   ];
 
-  const situationOptions = [
-    { id: "multistate", label: "I've worked or earned income in multiple states", icon: <MapPin className="w-5 h-5" /> },
+  // NEW: Nomadic Life options (split from situations)
+  const nomadicLifeOptions = [
     { id: "330days", label: "I spend over 330 days outside the USA in a year", icon: <Globe className="w-5 h-5" /> },
     { id: "visa-abroad", label: "I have a visa to live outside of the USA", icon: <Plane className="w-5 h-5" /> },
-    { id: "unsure-deductions", label: "I'm unsure what I can deduct", icon: <HelpCircle className="w-5 h-5" /> },
+    { id: "multistate", label: "I've worked or earned income in multiple states", icon: <MapPin className="w-5 h-5" /> },
+    { id: "planning", label: "Still planning my Nomadic life", icon: <Compass className="w-5 h-5" /> },
+  ];
+
+  // UPDATED: Situations options (now focused on pain points/attitudes)
+  const situationOptions = [
     { id: "tax-averse", label: "I am highly averse to paying taxes", icon: <AlertTriangle className="w-5 h-5" /> },
     { id: "mixed-expenses", label: "I mix personal and business expenses sometimes", icon: <Shuffle className="w-5 h-5" /> },
     { id: "worried-mistakes", label: "I worry about doing something wrong", icon: <AlertCircle className="w-5 h-5" /> },
     { id: "bad-accountant", label: "My last accountant didn't provide the customer service I was hoping for", icon: <UserX className="w-5 h-5" /> },
+    { id: "nomad-accountant", label: "Looking for an accountant that gets the digital nomad life", icon: <Heart className="w-5 h-5" /> },
     { id: "no-ai-trust", label: "I don't trust AI to give me the relevant guidance for my tax situation", icon: <Bot className="w-5 h-5" /> },
   ];
 
@@ -269,7 +294,43 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
     return { qualified: true, reasons };
   };
 
+  const validateEmail = (email: string): boolean => {
+    if (!email.trim()) {
+      setEmailError("Email is required");
+      return false;
+    }
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError("Please enter a valid email address");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
+  const validatePhone = (phone: string): boolean => {
+    if (!phone.trim()) {
+      setPhoneError("Phone number is required");
+      return false;
+    }
+    // Remove +1 prefix for validation if that's all there is
+    const cleanedPhone = phone.replace(/^\+1\s*$/, "");
+    if (!cleanedPhone || !PHONE_REGEX.test(phone)) {
+      setPhoneError("Please enter a valid phone number");
+      return false;
+    }
+    setPhoneError("");
+    return true;
+  };
+
   const handleSubmit = async () => {
+    // Validate email and phone
+    const isEmailValid = validateEmail(answers.email);
+    const isPhoneValid = validatePhone(answers.phone);
+
+    if (!isEmailValid || !isPhoneValid) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -278,6 +339,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
         saveResponse("incomeSources", answers.incomeSources),
         saveResponse("expatCountry", answers.expatCountry),
         saveResponse("isExpat", answers.isExpat),
+        saveResponse("nomadicLife", answers.nomadicLife),
         saveResponse("situations", answers.situations),
         saveResponse("financialTracking", answers.financialTracking),
         saveResponse("lookingFor", answers.lookingFor),
@@ -325,6 +387,15 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
 
   const handleAutoAdvance = () => {
     setTimeout(() => goToNextStep(), 400);
+  };
+
+  // Check if submit button should be disabled
+  const isSubmitDisabled = () => {
+    if (!answers.name.trim()) return true;
+    if (!answers.email.trim()) return true;
+    if (!answers.phone.trim() || answers.phone.trim() === "+1") return true;
+    if (isSubmitting) return true;
+    return false;
   };
 
   const renderStep = () => {
@@ -424,9 +495,41 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
         );
 
       case 3:
+        // NEW: Nomadic Life question
         return (
           <QuestionWrapper
-            title="Which of these applies to you?"
+            title="What does your Nomadic life look like?"
+            subtitle="Select all that apply"
+            backgroundImage={rvAutumnLeaves}
+            placeholderImage={womanWorkingViewsPlaceholder}
+          >
+            <MultiSelectQuestion
+              options={nomadicLifeOptions}
+              selected={answers.nomadicLife}
+              onChange={(val) => setAnswers({ ...answers, nomadicLife: val })}
+            />
+            <div className="mt-5 flex justify-center gap-3">
+              <Button
+                variant="outline"
+                className="rounded-full text-foreground border-muted-foreground/30 hover:bg-muted"
+                onClick={goToPrevStep}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <Button className="rounded-full px-6" onClick={goToNextStep}>
+                Continue
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </QuestionWrapper>
+        );
+
+      case 4:
+        // UPDATED: Situations question (now focused on pain points)
+        return (
+          <QuestionWrapper
+            title="Which of these apply to you?"
             subtitle="Select all that apply"
             backgroundImage={womanWorkingViews}
             placeholderImage={womanWorkingViewsPlaceholder}
@@ -453,7 +556,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           </QuestionWrapper>
         );
 
-      case 4:
+      case 5:
         return (
           <QuestionWrapper
             title="How would you describe yourself when it comes to financial tracking and taxes?"
@@ -479,7 +582,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           </QuestionWrapper>
         );
 
-      case 5:
+      case 6:
         return (
           <QuestionWrapper
             title="What are you looking for right now?"
@@ -513,7 +616,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           </QuestionWrapper>
         );
 
-      case 6:
+      case 7:
         return (
           <QuestionWrapper
             title="How fast do you need help?"
@@ -542,7 +645,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
           </QuestionWrapper>
         );
 
-      case 7:
+      case 8:
         return (
           <QuestionWrapper
             title="Almost There!"
@@ -555,8 +658,16 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
               email={answers.email}
               phone={answers.phone}
               onNameChange={(val) => setAnswers({ ...answers, name: val })}
-              onEmailChange={(val) => setAnswers({ ...answers, email: val })}
-              onPhoneChange={(val) => setAnswers({ ...answers, phone: val })}
+              onEmailChange={(val) => {
+                setAnswers({ ...answers, email: val });
+                if (emailError) validateEmail(val);
+              }}
+              onPhoneChange={(val) => {
+                setAnswers({ ...answers, phone: val });
+                if (phoneError) validatePhone(val);
+              }}
+              emailError={emailError}
+              phoneError={phoneError}
             />
             <div className="mt-5 flex justify-center gap-3">
               <Button
@@ -570,7 +681,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
               <Button
                 className="rounded-full px-6"
                 onClick={handleSubmit}
-                disabled={!answers.name.trim() || !answers.email.trim() || isSubmitting}
+                disabled={isSubmitDisabled()}
               >
                 {isSubmitting ? "Submitting..." : "See My Results"}
                 <Sparkles className="w-4 h-4 ml-2" />
