@@ -36,10 +36,10 @@ const About = () => {
 
   const credentials = [
     { icon: Award, label: "Enrolled Agent (EA)", desc: "Licensed to represent taxpayers before the IRS since 2014" },
-    { icon: Calculator, label: "QuickBooks ProAdvisor", desc: "Extensively trained in accounting software solutions" },
-    { icon: BookOpen, label: "NTPI Fellow", desc: "Advanced tax professional designation" },
     { icon: Shield, label: "Certified Tax Coach", desc: "Proactive tax planning, not just filing" },
+    { icon: BookOpen, label: "NTPI Fellow", desc: "Advanced tax professional designation" },
     { icon: Users, label: "Gusto People Advisor", desc: "Payroll and HR tax expertise" },
+    { icon: Calculator, label: "QuickBooks ProAdvisor", desc: "Extensively trained in accounting software solutions" },
     { icon: MapPin, label: "Full-Time Nomad", desc: "Living the lifestyle since 2016" },
   ];
 
@@ -79,22 +79,24 @@ const About = () => {
       {/* Section 2: Personal Intro + Video */}
       <section className="py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
-            {/* Left: Video Thumbnail - Rectangular */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-stretch max-w-6xl mx-auto">
+            {/* Left: Video Thumbnail - Rectangular, matches height of right column */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center"
+              className="flex justify-center h-full"
             >
-              <InlineVideoPlayer
-                thumbnail={heatherVideoThumbnail}
-                videoSrc="/videos/heather-intro.mp4"
-                alt="Heather - The Tax Queen"
-                className="w-full max-w-md aspect-video rounded-2xl shadow-2xl"
-                aspectRatio="video"
-              />
+              <div className="w-full max-w-md lg:max-w-none h-full">
+                <InlineVideoPlayer
+                  thumbnail={heatherVideoThumbnail}
+                  videoSrc="/videos/heather-intro.mp4"
+                  alt="Heather - The Tax Queen"
+                  className="w-full h-full rounded-2xl shadow-2xl"
+                  aspectRatio="video"
+                />
+              </div>
             </motion.div>
 
             {/* Right: Text Content */}
@@ -114,8 +116,8 @@ const About = () => {
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Just like you, I built my own business from the ground up, so I know firsthand how tough it can be. And with 8 years of experience working with nomadic solopreneurs, entrepreneurs, and small business owners just like you, I know exactly what keeps you awake at night.
               </p>
-              <Button size="lg" className="mt-4" onClick={() => openQuiz()}>
-                Let's Work Together
+              <Button variant="cta" size="lg" className="mt-4" onClick={() => openQuiz()}>
+                Get Started
               </Button>
             </motion.div>
           </div>
@@ -172,12 +174,12 @@ const About = () => {
 
               <div className="bg-card rounded-2xl p-8 lg:p-12 border border-border shadow-sm">
                 <TabsContent value="why-me" className="mt-0 space-y-6">
-                  <div className="flex flex-col lg:flex-row gap-8 items-start">
-                    <div className="lg:w-1/3">
+                  <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+                    <div className="lg:w-1/3 flex">
                       <img
                         src={rvMountainsBackground}
                         alt="Life on the road"
-                        className="rounded-xl w-full aspect-[4/3] object-cover shadow-md"
+                        className="rounded-xl w-full h-auto lg:h-full object-cover shadow-md"
                       />
                     </div>
                     <div className="lg:w-2/3 space-y-4">
@@ -193,12 +195,12 @@ const About = () => {
                 </TabsContent>
 
                 <TabsContent value="my-journey" className="mt-0 space-y-6">
-                  <div className="flex flex-col lg:flex-row gap-8 items-start">
-                    <div className="lg:w-1/3">
+                  <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+                    <div className="lg:w-1/3 flex">
                       <img
                         src={freedomNomad}
                         alt="Life on the road"
-                        className="rounded-xl w-full aspect-[4/3] object-cover shadow-md"
+                        className="rounded-xl w-full h-auto lg:h-full object-cover shadow-md"
                       />
                     </div>
                     <div className="lg:w-2/3 space-y-4">
@@ -214,12 +216,12 @@ const About = () => {
                 </TabsContent>
 
                 <TabsContent value="my-beginning" className="mt-0 space-y-6">
-                  <div className="flex flex-col lg:flex-row gap-8 items-start">
-                    <div className="lg:w-1/3">
+                  <div className="flex flex-col lg:flex-row gap-8 items-stretch">
+                    <div className="lg:w-1/3 flex">
                       <img
                         src={heatherInVan}
                         alt="Heather's early days"
-                        className="rounded-xl w-full aspect-[4/3] object-cover shadow-md"
+                        className="rounded-xl w-full h-auto lg:h-full object-cover shadow-md"
                       />
                     </div>
                     <div className="lg:w-2/3 space-y-4">
@@ -387,7 +389,7 @@ const About = () => {
               <Button variant="cta" size="lg" onClick={() => openQuiz()}>
                 Get Started
               </Button>
-              <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10" asChild>
+              <Button size="lg" variant="outline" className="rounded-full bg-transparent text-white border-white hover:bg-white/10" asChild>
                 <a href="/services">Explore Services</a>
               </Button>
             </div>
