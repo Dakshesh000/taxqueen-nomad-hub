@@ -53,13 +53,20 @@ const HeroSection = () => {
     };
   }, [isMobile]);
 
-  // Mobile: full-bleed video with no padding
+  // Mobile: full-bleed video with no padding, height animates from 70vh to 100vh
   // Desktop: animated padding based on scroll
   const minPadding = isMobile ? 0 : 16;
   const maxPadding = isMobile ? 0 : 56;
   const videoPadding = minPadding + (maxPadding - minPadding) * (1 - scrollProgress);
   const videoTranslateY = isLocked ? (isMobile ? -200 : -280) : -scrollProgress * (isMobile ? 200 : 280);
   const textTranslateY = scrollProgress * 150;
+
+  // Mobile video height: smoothly interpolate from 70vh to 100vh based on scroll
+  const mobileStartHeight = 70;
+  const mobileEndHeight = 100;
+  const mobileVideoHeight = isMobile 
+    ? (isLocked ? mobileEndHeight : mobileStartHeight + (mobileEndHeight - mobileStartHeight) * scrollProgress)
+    : null;
 
   return (
     <section className="relative min-h-[110vh] bg-white">
@@ -112,7 +119,14 @@ const HeroSection = () => {
           maxWidth: isMobile ? '100%' : `calc(100% - ${videoPadding * 2}px)`,
         }}
       >
-        <div className={`relative w-full ${isLocked ? 'h-screen' : 'h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh]'} ${isMobile ? 'rounded-none' : 'rounded-2xl'} overflow-hidden shadow-lift-lg transition-all duration-300`}>
+        <div 
+          className={`relative w-full ${
+            !isMobile && (isLocked ? 'h-screen' : 'h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh]')
+          } ${isMobile ? 'rounded-none' : 'rounded-2xl'} overflow-hidden shadow-lift-lg transition-all duration-300`}
+          style={{
+            height: isMobile ? `${mobileVideoHeight}vh` : undefined,
+          }}
+        >
           {/* Thumbnail - shows while video loads */}
           <img
             src={heroVideoThumbnail}
