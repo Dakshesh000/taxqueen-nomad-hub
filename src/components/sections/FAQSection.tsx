@@ -98,14 +98,45 @@ const FAQSection = () => {
         </div>
       </div>
 
-      {/* Mobile: Accordion Layout */}
+      {/* Mobile: Horizontal Tabs + Accordion */}
       <div className="md:hidden container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-foreground mb-8 uppercase">
+        <h2 className="text-3xl font-bold text-foreground mb-6 uppercase">
           You've got questions.<br />
           <span className="text-primary">I have the answers.</span>
         </h2>
 
-        <Accordion type="single" defaultValue="item-0" collapsible className="space-y-3">
+        {/* Horizontal scrollable category tabs */}
+        <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 mb-6">
+          <div className="flex gap-2 w-max pb-2">
+            {questions.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedIndex(index)}
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
+                  selectedIndex === index
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-foreground hover:bg-muted/80"
+                )}
+              >
+                Q{index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Answer card for selected question */}
+        <div className="bg-primary rounded-xl p-5 mb-6">
+          <h3 className="text-lg font-semibold text-primary-foreground mb-3">
+            {questions[selectedIndex].question}
+          </h3>
+          <p className="text-primary-foreground/90 leading-relaxed text-base">
+            {questions[selectedIndex].answer}
+          </p>
+        </div>
+
+        {/* All questions accordion for reference */}
+        <Accordion type="single" collapsible className="space-y-3">
           {questions.map((item, index) => (
             <AccordionItem
               key={index}
@@ -113,9 +144,9 @@ const FAQSection = () => {
               className="bg-muted/50 rounded-lg px-4 border-none"
             >
               <AccordionTrigger className="text-left hover:no-underline py-4">
-                <span className="font-medium">{item.question}</span>
+                <span className="font-medium text-sm">{item.question}</span>
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground pb-4">
+              <AccordionContent className="text-muted-foreground pb-4 text-sm">
                 {item.answer}
               </AccordionContent>
             </AccordionItem>

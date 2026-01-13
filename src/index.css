@@ -205,4 +205,25 @@
   .safe-area-all {
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
+
+  /* Auto-scroll animation for mobile marquee */
+  @keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-scroll-mobile {
+    animation: scroll-left 25s linear infinite;
+  }
+
+  .animate-scroll-mobile-fast {
+    animation: scroll-left 15s linear infinite;
+  }
+
+  .animate-scroll-mobile:hover,
+  .animate-scroll-mobile:active,
+  .animate-scroll-mobile-fast:hover,
+  .animate-scroll-mobile-fast:active {
+    animation-play-state: paused;
+  }
 }
