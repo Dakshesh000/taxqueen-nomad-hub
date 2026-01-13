@@ -25,6 +25,19 @@ const MediaLink = ({ media, index }: { media: typeof featuredMedia[0]; index: nu
   </motion.a>
 );
 
+// Static version for marquee (no animation delay)
+const MediaLinkStatic = ({ media }: { media: typeof featuredMedia[0] }) => (
+  <a
+    href={media.url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center gap-2 text-base font-semibold text-muted-foreground/60 hover:text-primary transition-colors duration-300 whitespace-nowrap flex-shrink-0"
+  >
+    {media.name}
+    <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+  </a>
+);
+
 const FeaturedInSection = () => {
   return (
     <section className="py-12 sm:py-16 bg-muted/30 border-y border-border">
@@ -39,11 +52,12 @@ const FeaturedInSection = () => {
             As Featured In
           </p>
           
-          {/* Mobile: Horizontal scroll */}
-          <div className="md:hidden overflow-x-auto scrollbar-hide -mx-4 px-4">
-            <div className="flex gap-6 w-max justify-start pb-2">
-              {featuredMedia.map((media, index) => (
-                <MediaLink key={media.name} media={media} index={index} />
+          {/* Mobile: Auto-scrolling marquee */}
+          <div className="md:hidden overflow-hidden -mx-4">
+            <div className="flex gap-8 animate-scroll-mobile-fast" style={{ width: 'max-content' }}>
+              {/* Duplicate items for seamless loop */}
+              {[...featuredMedia, ...featuredMedia].map((media, index) => (
+                <MediaLinkStatic key={index} media={media} />
               ))}
             </div>
           </div>

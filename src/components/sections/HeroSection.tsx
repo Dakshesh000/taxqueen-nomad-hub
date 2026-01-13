@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { useQuiz } from "@/contexts/QuizContext";
 import { heroVideoThumbnail } from "@/assets";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const HeroSection = () => {
   const { openQuiz } = useQuiz();
+  const isMobile = useIsMobile();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -15,7 +17,7 @@ const HeroSection = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const lockPoint = 280;
+      const lockPoint = isMobile ? 200 : 280;
       const maxScroll = window.innerHeight * 0.5;
       const snapThreshold = 120;
       
@@ -49,12 +51,14 @@ const HeroSection = () => {
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
 
-  const minPadding = 16;
-  const maxPadding = 56;
+  // Mobile: full-bleed video with no padding
+  // Desktop: animated padding based on scroll
+  const minPadding = isMobile ? 0 : 16;
+  const maxPadding = isMobile ? 0 : 56;
   const videoPadding = minPadding + (maxPadding - minPadding) * (1 - scrollProgress);
-  const videoTranslateY = isLocked ? -280 : -scrollProgress * 280;
+  const videoTranslateY = isLocked ? (isMobile ? -200 : -280) : -scrollProgress * (isMobile ? 200 : 280);
   const textTranslateY = scrollProgress * 150;
 
   return (
@@ -97,16 +101,18 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Video/Image Frame - Expands on scroll until locked */}
+      {/* Video/Image Frame - Full-bleed on mobile, overlaps navbar for immersive feel */}
       <div 
-        className="relative z-20 mx-auto transition-all duration-300 ease-out will-change-transform"
+        className={`relative mx-auto transition-all duration-300 ease-out will-change-transform ${
+          isMobile ? 'z-[60] -mt-16' : 'z-20'
+        }`}
         style={{
-          padding: `${videoPadding}px`,
+          padding: isMobile ? 0 : `${videoPadding}px`,
           transform: `translateY(${videoTranslateY}px)`,
-          maxWidth: `calc(100% - ${videoPadding * 2}px)`,
+          maxWidth: isMobile ? '100%' : `calc(100% - ${videoPadding * 2}px)`,
         }}
       >
-        <div className={`relative w-full ${isLocked ? 'h-screen' : 'h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh]'} rounded-2xl overflow-hidden shadow-lift-lg transition-all duration-300`}>
+        <div className={`relative w-full ${isLocked ? 'h-screen' : 'h-[100vh] md:h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh]'} ${isMobile ? 'rounded-none' : 'rounded-2xl'} overflow-hidden shadow-lift-lg transition-all duration-300`}>
           {/* Thumbnail - shows while video loads */}
           <img
             src={heroVideoThumbnail}

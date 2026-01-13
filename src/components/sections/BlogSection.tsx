@@ -91,11 +91,6 @@ const BlogSection = () => {
             <ChevronRight className="w-6 h-6" />
           </CarouselNext>
         </Carousel>
-        
-        {/* Mobile swipe indicator */}
-        <p className="md:hidden text-center text-sm text-muted-foreground mt-4">
-          Swipe to see more →
-        </p>
       </div>
     </section>
   );
