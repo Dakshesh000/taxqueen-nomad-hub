@@ -88,9 +88,7 @@ const QuizModal = ({ isOpen, onClose, children, hasEngaged = false }: QuizModalP
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               className={`
                 relative w-full bg-background shadow-lift-lg
-                /* Mobile: Full screen with flex layout */
                 h-[100dvh] flex flex-col
-                /* Desktop: Centered modal with fixed dimensions */
                 md:h-auto md:max-w-2xl md:rounded-3xl
                 ${hasEngaged ? 'md:min-h-[620px] md:max-h-[90vh]' : 'md:max-h-[90vh]'}
               `}
