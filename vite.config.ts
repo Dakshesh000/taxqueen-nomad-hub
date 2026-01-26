@@ -50,6 +50,8 @@ export default defineConfig(({ mode }) => ({
           ],
           'vendor-charts': ['recharts'],
           'vendor-motion': ['motion'],
+          'vendor-carousel': ['embla-carousel-react'],
+          'vendor-markdown': ['react-markdown'],
         },
       },
     },
