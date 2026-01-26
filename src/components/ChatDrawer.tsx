@@ -61,7 +61,9 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
               <img 
                 src={heatherChatAvatar} 
-                alt="Heather" 
+                alt="Heather - Tax Queen Assistant" 
+                width={40}
+                height={40}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -86,7 +88,9 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
               <div className="w-12 h-12 rounded-full overflow-hidden mx-auto mb-3 border-2 border-primary/20">
                 <img 
                   src={heatherChatAvatar} 
-                  alt="Heather" 
+                  alt="Heather - Tax Queen Assistant" 
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover opacity-50"
                 />
               </div>

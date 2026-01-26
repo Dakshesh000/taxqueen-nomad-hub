@@ -131,7 +131,9 @@ const ServicesTestimonialsCarousel = () => {
                     {/* Avatar */}
                     <img
                       src={testimonial.avatar}
-                      alt={testimonial.name}
+                      alt={`${testimonial.name} testimonial`}
+                      width={80}
+                      height={80}
                       className="w-20 h-20 rounded-full object-cover mb-6 border-4 border-primary/20"
                     />
                     

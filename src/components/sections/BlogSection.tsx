@@ -63,6 +63,8 @@ const BlogSection = () => {
                     <img 
                       src={post.image} 
                       alt={post.title}
+                      width={400}
+                      height={225}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -73,9 +75,9 @@ const BlogSection = () => {
                   <p className="text-muted-foreground text-sm leading-relaxed flex-grow">
                     {post.excerpt}
                   </p>
-                  {/* Read More Arrow */}
+                  {/* Descriptive link text for SEO */}
                   <div className="flex items-center gap-2 text-primary font-medium text-sm mt-auto">
-                    <span>Read More</span>
+                    <span>Read: {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}</span>
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
                 </article>
