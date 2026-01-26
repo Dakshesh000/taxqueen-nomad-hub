@@ -1,38 +1,54 @@
 
 
-## Fix Desktop Quiz White Space Issue
+## Replace Services Page Hero Image
 
-### Problem Identified
-
-From your screenshot, the desktop quiz modal shows white empty space below the question content. This happens because:
-
-| Setting | Effect |
-|---------|--------|
-| `md:bg-background` on modal | Adds white background on desktop |
-| `md:h-auto` on modal | Height based on content (not fixed) |
-| `md:min-h-[620px]` on modal | Sets minimum 620px height |
-| QuestionWrapper content shorter than 620px | White background shows in the gap |
+### Overview
+Replace the current Services page hero image with the new RV sunset image featuring a white motorhome with camping chairs at sunset.
 
 ---
 
-### Solution
+### Steps
 
-Remove `md:bg-background` from the modal card so the background image from QuestionWrapper fills the entire container on both mobile AND desktop.
+**1. Copy the uploaded image to the project**
 
-**File: `src/components/quiz/QuizModal.tsx`**
-
-```text
-Line 92 - Current:
-md:h-auto md:w-full md:bg-background
-
-Change to:
-md:h-auto md:w-full
+Copy the user-uploaded image to the services assets folder:
+```
+user-uploads://image-16.png → src/assets/services/services-hero-new.webp
 ```
 
-This single change ensures:
-- Background image fills the entire quiz card on all screen sizes
-- No white gaps below the content
-- QuestionWrapper's dark overlay remains consistent
+Note: I'll convert to WebP format during the copy for optimal file size (addressing your "scaled down" comment).
+
+**2. Update the asset barrel export**
+
+**File: `src/assets/index.ts`**
+
+Update line 19 to point to the new image:
+```typescript
+// Before
+export { default as servicesHero } from './services/services-hero.jpg';
+
+// After
+export { default as servicesHero } from './services/services-hero-new.webp';
+```
+
+**3. Update the alt text for SEO accuracy**
+
+**File: `src/pages/Services.tsx`**
+
+Update line 52 with accurate alt text:
+```typescript
+// Before
+alt="Digital nomad working from van with mountain views"
+
+// After
+alt="White RV motorhome with camping chairs at vibrant sunset"
+```
+
+---
+
+### No Other Changes Needed
+
+The `Services.tsx` component already imports and uses `servicesHero`, so the image will automatically update once the asset path is changed.
 
 ---
 
@@ -40,13 +56,13 @@ This single change ensures:
 
 | File | Change |
 |------|--------|
-| `src/components/quiz/QuizModal.tsx` | Remove `md:bg-background` from line 92 |
+| `src/assets/services/services-hero-new.webp` | New file (copied from upload) |
+| `src/assets/index.ts` | Update `servicesHero` import path |
+| `src/pages/Services.tsx` | Update alt text for new image |
 
 ---
 
-### Expected Result
+### Result
 
-- Desktop quiz card shows the background image edge-to-edge
-- No white space below the question content
-- Consistent appearance between mobile and desktop
+The Services page hero will display the new vibrant sunset RV image with camping chairs, optimized as WebP for faster loading.
 
