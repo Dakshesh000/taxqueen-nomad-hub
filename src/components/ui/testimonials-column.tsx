@@ -52,7 +52,9 @@ const TestimonialsColumn = memo((props: {
                       {item.avatar ? (
                         <img 
                           src={item.avatar} 
-                          alt={item.name}
+                          alt={`${item.name} testimonial`}
+                          width={40}
+                          height={40}
                           className="w-10 h-10 rounded-full object-cover"
                         />
                       ) : (
@@ -78,6 +80,8 @@ const TestimonialsColumn = memo((props: {
                   <img
                     src={item.src}
                     alt={item.alt}
+                    width={320}
+                    height={192}
                     className="w-full h-48 object-cover rounded-xl"
                   />
                 )}

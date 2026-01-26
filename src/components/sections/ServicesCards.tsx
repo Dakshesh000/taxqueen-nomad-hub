@@ -37,6 +37,8 @@ const ServiceCard = memo(({
       <img
         src={image}
         alt={title}
+        width={400}
+        height={300}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loading="lazy"
       />

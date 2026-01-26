@@ -15,38 +15,47 @@ const HeroSection = () => {
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      // Mobile uses lower lock point for scroll snap
-      const lockPoint = isMobile ? 180 : 280;
-      const maxScroll = window.innerHeight * 0.5;
+      if (ticking) return;
       
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      
-      if (scrollY >= lockPoint) {
-        setIsLocked(true);
-        setScrollProgress(1);
-      } else {
-        setIsLocked(false);
-        const progress = Math.min(scrollY / maxScroll, 1);
-        setScrollProgress(progress);
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        // Mobile uses lower lock point for scroll snap
+        const lockPoint = isMobile ? 180 : 280;
+        const maxScroll = window.innerHeight * 0.5;
         
-        // Native CSS scroll-snap handles snapping on mobile
-        // Only use JS snap assist on desktop
-        if (!isMobile) {
-          const snapThreshold = 100;
-          if (scrollY > lockPoint - snapThreshold && scrollY < lockPoint) {
-            scrollTimeoutRef.current = setTimeout(() => {
-              window.scrollTo({
-                top: lockPoint,
-                behavior: 'smooth'
-              });
-            }, 150);
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        
+        if (scrollY >= lockPoint) {
+          setIsLocked(true);
+          setScrollProgress(1);
+        } else {
+          setIsLocked(false);
+          const progress = Math.min(scrollY / maxScroll, 1);
+          setScrollProgress(progress);
+          
+          // Native CSS scroll-snap handles snapping on mobile
+          // Only use JS snap assist on desktop
+          if (!isMobile) {
+            const snapThreshold = 100;
+            if (scrollY > lockPoint - snapThreshold && scrollY < lockPoint) {
+              scrollTimeoutRef.current = setTimeout(() => {
+                window.scrollTo({
+                  top: lockPoint,
+                  behavior: 'smooth'
+                });
+              }, 150);
+            }
           }
         }
-      }
+        
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -178,7 +187,15 @@ const HeroSection = () => {
             preload="auto"
             onCanPlayThrough={() => setIsVideoLoaded(true)}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-          />
+          >
+            {/* Accessibility: Captions track for deaf/hard-of-hearing users */}
+            <track 
+              kind="captions" 
+              src="/videos/hero-captions.vtt" 
+              srcLang="en" 
+              label="English captions"
+            />
+          </video>
           
           {/* US Tax Obligations Question - Yes/No Buttons */}
           <div 

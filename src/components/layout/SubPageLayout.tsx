@@ -21,6 +21,8 @@ const SubPageLayout = ({ bannerImage, bannerAlt, pageTitle, children }: SubPageL
             <img
               src={bannerImage}
               alt={bannerAlt}
+              width={1200}
+              height={200}
               className="w-full h-full object-cover"
             />
             {/* Subtle gradient overlay for depth */}
