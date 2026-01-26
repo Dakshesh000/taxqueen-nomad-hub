@@ -153,37 +153,41 @@ const HeroSection = () => {
               : (isLocked ? '0px' : '16px'),
           }}
         >
-          {/* Thumbnail - shows while video loads */}
+          {/* Thumbnail - shows while video loads (always visible on mobile) */}
           <img
             src={heroVideoThumbnail}
             alt="Aerial view of RV adventure - hero video thumbnail"
             width={1920}
             height={1080}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-0' : 'opacity-100'}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              isMobile ? 'opacity-100' : (isVideoLoaded ? 'opacity-0' : 'opacity-100')
+            }`}
             loading="eager"
             fetchPriority="high"
           />
           
-          {/* Video - fades in when loaded */}
-          <video
-            src="/videos/hero-background.mp4"
-            poster={heroVideoThumbnail}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            onCanPlayThrough={() => setIsVideoLoaded(true)}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
-          >
-            {/* Accessibility: Captions track for deaf/hard-of-hearing users */}
-            <track 
-              kind="captions" 
-              src="/videos/hero-captions.vtt" 
-              srcLang="en" 
-              label="English captions"
-            />
-          </video>
+          {/* Video - fades in when loaded (disabled on mobile for LCP performance) */}
+          {!isMobile && (
+            <video
+              src="/videos/hero-background.mp4"
+              poster={heroVideoThumbnail}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onCanPlayThrough={() => setIsVideoLoaded(true)}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {/* Accessibility: Captions track for deaf/hard-of-hearing users */}
+              <track 
+                kind="captions" 
+                src="/videos/hero-captions.vtt" 
+                srcLang="en" 
+                label="English captions"
+              />
+            </video>
+          )}
           
           {/* US Tax Obligations Question - Yes/No Buttons */}
           <div 
