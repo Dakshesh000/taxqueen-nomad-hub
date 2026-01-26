@@ -11,12 +11,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import GlobalQuiz from "@/components/quiz/GlobalQuiz";
+import { useQuiz } from "@/contexts/QuizContext";
 import { 
   Shield, 
   Calendar, 
   MapPin, 
   Award,
+  ArrowRight,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -28,6 +29,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/mlgbnbeo";
 
 const Contact = () => {
   const { toast } = useToast();
+  const { openQuiz } = useQuiz();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -226,18 +228,21 @@ const Contact = () => {
       {/* Not Sure Where To Get Started? Take The Quiz */}
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
+          <div className="text-center max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground uppercase">
               Not Sure Where To Get Started?
             </h2>
-            <p className="text-xl text-muted-foreground mt-2">
-              Take The Quiz
+            <p className="text-lg text-muted-foreground">
+              Answer a few quick questions and we'll match you with the right service for your nomad lifestyle.
             </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="rounded-2xl shadow-lg border border-border overflow-hidden h-[620px]">
-              <GlobalQuiz isEmbedded={true} />
-            </div>
+            <Button
+              size="lg"
+              className="rounded-full px-8"
+              onClick={() => openQuiz()}
+            >
+              Take The Quiz
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </Button>
           </div>
         </div>
       </section>
