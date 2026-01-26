@@ -12,6 +12,8 @@ export const HERO_MAX_PADDING = 56;
 // Quiz
 export const QUIZ_TOTAL_STEPS = 9;
 export const QUIZ_AUTO_ADVANCE_DELAY = 400;
+export const QUIZ_CONTENT_MIN_HEIGHT = 520; // Accommodates tallest question (6-option MultiSelect)
+export const QUIZ_CONTENT_MIN_HEIGHT_MOBILE = 480;
 
 // Animations
 export const WIGGLE_INTERVAL_MS = 5000;

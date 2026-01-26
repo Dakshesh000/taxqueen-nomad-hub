@@ -113,6 +113,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [isQualified, setIsQualified] = useState(false);
+  const [hasEngaged, setHasEngaged] = useState(false); // Track first interaction for layout stability
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailError, setEmailError] = useState<string>("");
@@ -140,12 +141,14 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
       // Reset quiz state when opening
       setShowResults(false);
       setIsQualified(false);
+      setHasEngaged(false);
       setIsSubmitting(false);
       setEmailError("");
       setPhoneError("");
 
       if (prefillUsTax === "usTaxYes") {
         // User answered Yes to US Tax - start at step 1 (income sources)
+        setHasEngaged(true); // Already engaged via hero
         setAnswers({
           usTaxObligations: true,
           incomeSources: [],
@@ -398,6 +401,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
               <Button
                 className="w-full rounded-full h-12 text-base"
                 onClick={() => {
+                  setHasEngaged(true);
                   setAnswers({ ...answers, usTaxObligations: true });
                   setCurrentStep(1);
                 }}
@@ -408,6 +412,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
                 variant="outline"
                 className="w-full rounded-full h-12 text-base border-2 border-foreground text-foreground hover:bg-muted"
                 onClick={() => {
+                  setHasEngaged(true);
                   setAnswers({ ...answers, usTaxObligations: false });
                   setIsQualified(false);
                   setShowResults(true);
@@ -426,6 +431,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             subtitle="Select all that apply"
             backgroundImage={vanSnowMountains}
             placeholderImage={vanSnowMountainsPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <MultiSelectQuestion
               options={incomeOptions}
@@ -451,6 +457,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             title="If an expat, what country is your residence or visa in?"
             backgroundImage={rvCoastalDrive}
             placeholderImage={rvCoastalDrivePlaceholder}
+            fixedHeight={hasEngaged}
           >
             <ExpatQuestion
               value={answers.expatCountry}
@@ -488,6 +495,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             subtitle="Select all that apply"
             backgroundImage={rvAutumnLeaves}
             placeholderImage={womanWorkingViewsPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <MultiSelectQuestion
               options={nomadicLifeOptions}
@@ -519,6 +527,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             subtitle="Select all that apply"
             backgroundImage={womanWorkingViews}
             placeholderImage={womanWorkingViewsPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <MultiSelectQuestion
               options={situationOptions}
@@ -548,6 +557,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             title="How would you describe yourself when it comes to financial tracking and taxes?"
             backgroundImage={truckDesert}
             placeholderImage={truckDesertPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <SingleSelectQuestion
               options={financialTrackingOptions}
@@ -575,6 +585,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             subtitle="Select all that apply"
             backgroundImage={workingAtBeach}
             placeholderImage={workingAtBeachPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <MultiSelectQuestion
               options={lookingForOptions}
@@ -608,6 +619,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             title="How fast do you need help?"
             backgroundImage={campingByRiver}
             placeholderImage={campingByRiverPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <SliderQuestion
               value={answers.urgency}
@@ -638,6 +650,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
             subtitle="Where should we send your results?"
             backgroundImage={sunsetRvReflection}
             placeholderImage={sunsetRvReflectionPlaceholder}
+            fixedHeight={hasEngaged}
           >
             <ContactForm
               name={answers.name}
@@ -715,7 +728,7 @@ const GlobalQuiz = ({ isEmbedded = false }: GlobalQuizProps) => {
   }
 
   return (
-    <QuizModal isOpen={isQuizOpen} onClose={closeQuiz}>
+    <QuizModal isOpen={isQuizOpen} onClose={closeQuiz} hasEngaged={hasEngaged}>
       {quizContent}
     </QuizModal>
   );
