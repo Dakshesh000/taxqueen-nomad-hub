@@ -89,7 +89,7 @@ const QuizModal = ({ isOpen, onClose, children, hasEngaged = false }: QuizModalP
                 relative shadow-lift-lg flex flex-col overflow-hidden
                 w-[95%] max-w-2xl rounded-3xl
                 h-[90dvh] max-h-[calc(90dvh-env(safe-area-inset-top)-env(safe-area-inset-bottom))]
-                md:h-auto md:w-full md:bg-background
+                md:h-auto md:w-full
                 ${hasEngaged ? 'md:min-h-[620px] md:max-h-[90vh]' : 'md:max-h-[90vh]'}
               `}
               onClick={(e) => e.stopPropagation()}
