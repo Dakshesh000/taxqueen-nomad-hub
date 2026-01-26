@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
@@ -78,6 +78,28 @@ const HeroSection = () => {
   // Mobile: show rounded corners while scaling up, remove when fully expanded
   const mobileFullyExpanded = isMobile && (isLocked || mobileScale >= 0.99);
 
+  // Memoize video container styles to reduce reflow calculations
+  const videoContainerStyles = useMemo(() => ({
+    transform: `translateY(${videoTranslateY}px) scale(${mobileScale})`,
+    transformOrigin: 'center top',
+    padding: isMobile ? 0 : `${videoPadding}px`,
+    maxWidth: isMobile ? '100%' : `calc(100% - ${videoPadding * 2}px)`,
+  }), [videoTranslateY, mobileScale, videoPadding, isMobile]);
+
+  // Memoize video frame styles to prevent layout shift
+  const videoFrameStyles = useMemo(() => ({
+    // Use 100dvh on mobile when locked for true full-screen (accounts for browser chrome)
+    height: isMobile 
+      ? (isLocked ? '100dvh' : '100vh')
+      : undefined,
+    // Rounded corners during expansion, none when fully expanded
+    borderRadius: isMobile 
+      ? (mobileFullyExpanded ? '0px' : '16px') 
+      : (isLocked ? '0px' : '16px'),
+    // Reserve minimum height to prevent CLS
+    minHeight: isMobile ? '100vh' : '70vh',
+  }), [isMobile, isLocked, mobileFullyExpanded]);
+
   return (
     <section 
       className="relative min-h-[110vh] bg-white"
@@ -129,29 +151,13 @@ const HeroSection = () => {
         className={`relative mx-auto transition-transform duration-300 ease-out will-change-transform ${
           isMobile ? 'z-[60] w-full' : 'z-20'
         }`}
-        style={{
-          // Only GPU-composited properties: transform (translateY + scale)
-          transform: `translateY(${videoTranslateY}px) scale(${mobileScale})`,
-          transformOrigin: 'center top',
-          // Desktop padding (static, not animated)
-          padding: isMobile ? 0 : `${videoPadding}px`,
-          maxWidth: isMobile ? '100%' : `calc(100% - ${videoPadding * 2}px)`,
-        }}
+        style={videoContainerStyles}
       >
         <div 
           className={`relative w-full ${
             !isMobile && (isLocked ? 'h-screen' : 'h-[70vh] sm:h-[80vh] xl:h-[85vh] 2xl:h-[88vh]')
           } overflow-hidden shadow-lift-lg transition-[border-radius] duration-300`}
-          style={{
-            // Use 100dvh on mobile when locked for true full-screen (accounts for browser chrome)
-            height: isMobile 
-              ? (isLocked ? '100dvh' : '100vh')
-              : undefined,
-            // Rounded corners during expansion, none when fully expanded
-            borderRadius: isMobile 
-              ? (mobileFullyExpanded ? '0px' : '16px') 
-              : (isLocked ? '0px' : '16px'),
-          }}
+          style={videoFrameStyles}
         >
           {/* Thumbnail - shows while video loads (always visible on mobile) */}
           <img
