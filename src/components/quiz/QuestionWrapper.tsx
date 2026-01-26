@@ -15,6 +15,7 @@ interface QuestionWrapperProps {
   backgroundImage: string;
   placeholderImage?: string; // Base64 LQIP for instant blur-up display
   children: ReactNode;
+  fixedHeight?: boolean; // Lock content area height after first interaction
 }
 
 const QuestionWrapper = ({
@@ -24,6 +25,7 @@ const QuestionWrapper = ({
   backgroundImage,
   placeholderImage,
   children,
+  fixedHeight = false,
 }: QuestionWrapperProps) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -112,8 +114,15 @@ const QuestionWrapper = ({
           </p>
         )}
 
-        {/* Question Content */}
-        <div className="w-full max-w-lg">{children}</div>
+        {/* Question Content - fixed height after first interaction to prevent layout shifts */}
+        <div 
+          className="w-full max-w-lg"
+          style={{
+            minHeight: fixedHeight ? '320px' : undefined,
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

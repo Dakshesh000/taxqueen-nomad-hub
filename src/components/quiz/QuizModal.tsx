@@ -6,11 +6,12 @@ interface QuizModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  hasEngaged?: boolean; // Lock modal height after first interaction
 }
 
 const CALENDAR_URL = "https://bookme.name/embed/widget/4573/PkkmsRgxM6nqOnUWU19ErYrgjwUnFdCG9FxGCRAmDRfX8SgQudeXGIPa1h36";
 
-const QuizModal = ({ isOpen, onClose, children }: QuizModalProps) => {
+const QuizModal = ({ isOpen, onClose, children, hasEngaged = false }: QuizModalProps) => {
   const [calendarPreloaded, setCalendarPreloaded] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -89,7 +90,9 @@ const QuizModal = ({ isOpen, onClose, children }: QuizModalProps) => {
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full h-full md:h-auto md:max-w-2xl md:max-h-[90vh] overflow-hidden md:overflow-y-auto bg-background md:rounded-3xl shadow-lift-lg pb-[env(safe-area-inset-bottom)]"
+              className={`relative w-full h-full md:h-auto md:max-w-2xl md:max-h-[90vh] overflow-hidden md:overflow-y-auto bg-background md:rounded-3xl shadow-lift-lg pb-[env(safe-area-inset-bottom)] ${
+                hasEngaged ? 'md:min-h-[600px]' : ''
+              }`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button - Inside the card */}
